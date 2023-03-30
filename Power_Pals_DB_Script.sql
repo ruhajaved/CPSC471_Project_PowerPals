@@ -78,7 +78,7 @@ CREATE TABLE instructor (
   );
 
 CREATE TABLE promo_code (
-	Promo_Code varchar(256) NOT NULL, 	/* PRIMARY KEY */
+	Promo_Code  varchar(256) NOT NULL, 		/* PRIMARY KEY */
     Start_Date date NOT NULL, 
     End_Date date NOT NULL, 
     Discount_Name varchar(256) NOT NULL, 
@@ -103,7 +103,7 @@ CREATE TABLE fitness_class (
 );
 
 CREATE TABLE gym (
-	Gym_ID int NOT NULL,				/* PRIMARY KEY */
+	Gym_ID int NOT NULL AUTO_INCREMENT,				/* PRIMARY KEY */
     Address varchar(256) NOT NULL,
     Gym_Brand varchar(256) NOT NULL, 	/* if this is a small gym / not a franchise, Name of Gym goes here*/
     Gym_Branch varchar(256),				/* OPTIONAL because not all gyms have brances */
@@ -163,7 +163,8 @@ ALTER TABLE fitness_class
 ;
 
 ALTER TABLE studio 
-	ADD	FOREIGN KEY (Gym_ID)		REFERENCES gym(Gym_ID) ON UPDATE CASCADE
+	ADD	FOREIGN KEY (Gym_ID)		REFERENCES gym(Gym_ID) ON UPDATE CASCADE ON DELETE CASCADE;
+
 ;
 
 
