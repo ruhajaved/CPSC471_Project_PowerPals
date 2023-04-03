@@ -68,8 +68,7 @@ const getAllGyms = (req, res) => {
             gyms[gymId] = {
               gymId: gymId,
               address: row.Address,
-              gymBrand: row.Gym_Brand,
-              gymBranch: row.Gym_Branch,
+              name: row.Gym_Name,
               studios: [],
             };
           }
