@@ -10,10 +10,11 @@ CREATE TABLE payment_for_classes (
     CONSTRAINT pk_payment_for_classes PRIMARY KEY(Class_ID, Transaction_ID, Customer_ID)
 );
 
-CREATE TABLE instructor_teaches_fitness_class (  
-	Instructor_ID int NOT NULL, 	/* PRIMARY KEY 1/2 */
-    Class_ID int NOT NULL, 			/* PRIMARY KEY 2/2 */
-    CONSTRAINT pk_instructor_teaches_fitness_class PRIMARY KEY(Instructor_ID, Class_ID)
+CREATE TABLE payment_for_membership (   
+	Membership_ID int NOT NULL,  		/* PRIMARY KEY 1/3 */
+    Transaction_ID int NOT NULL, 	/* PRIMARY KEY 2/3 */
+    Customer_ID int NOT NULL, 		/* PRIMARY KEY 3/3 */
+    CONSTRAINT pk_payment_for_membership PRIMARY KEY(Membership_ID, Transaction_ID, Customer_ID)
 );
 
 CREATE TABLE instructor_can_teach_class_type (  
@@ -23,19 +24,17 @@ CREATE TABLE instructor_can_teach_class_type (
 );
 
 CREATE TABLE payment (
-	Transaction_ID int NOT NULL, 		/* PRIMARY KEY */
-	Transaction_Date date NOT NULL, 
-	Transaction_Time time NOT NULL, 
-	Transaction_Amount int NOT NULL,
-	Credit_Card_No int NOT NULL,
-	Membership_ID int,   				/* MEMBERSHIP IS OPTIONAL */
-	Customer_ID int NOT NULL,			
+	Transaction_ID int NOT NULL AUTO_INCREMENT, 		/* PRIMARY KEY */
+	Trans_Date date NOT NULL, 
+	Trans_Time time NOT NULL, 
+	Amount int NOT NULL,
+	Credit_Card_No int NOT NULL,	
 	Promo_Code varchar(256),  			/* OPTIONAL */ 
     PRIMARY KEY(Transaction_ID)
 );
 
 CREATE TABLE membership (
-	Membership_ID int NOT NULL, 		/* PRIMARY KEY */
+	Membership_ID int NOT NULL AUTO_INCREMENT, 		/* PRIMARY KEY */
     Tier varchar(256) NOT NULL,
     Discount_Amount int NOT NULL,
     Customer_ID int NOT NULL,
@@ -43,51 +42,55 @@ CREATE TABLE membership (
 );
 
 CREATE TABLE customer (
-	Customer_ID int NOT NULL,			/* PRIMARY KEY */
+	Customer_ID int NOT NULL AUTO_INCREMENT,			/* PRIMARY KEY */
     First_Name varchar(256) NOT NULL, 
     Last_Name varchar(256) NOT NULL, 
     Address varchar(256) NOT NULL, 
     Email varchar(256) NOT NULL, 
     Gender varchar(256),				/* OPTIONAL */
-    Password varchar(256) NOT NULL, 
     Date_of_Birth varchar(256) NOT NULL,
-    PRIMARY KEY(Customer_ID)
+    Password varchar(256) NOT NULL, 
+    PRIMARY KEY(Customer_ID),
+    UNIQUE(Email)
   );
 
 CREATE TABLE company_admin (
-	Admin_ID int NOT NULL, 
+	Admin_ID int NOT NULL AUTO_INCREMENT, 
     First_Name varchar(256) NOT NULL, 
     Last_Name varchar(256) NOT NULL, 
     Address varchar(256) NOT NULL, 
     Email varchar(256) NOT NULL, 
     Password varchar(256) NOT NULL, 
-    Privileges varchar(256) NOT NULL,
-    PRIMARY KEY(Admin_ID)
+    Salary int NOT NULL,
+    PRIMARY KEY(Admin_ID),
+    UNIQUE(Email)
   );
 
 CREATE TABLE instructor (
-	Instructor_ID int NOT NULL, 
+	Instructor_ID int NOT NULL AUTO_INCREMENT, 
     First_Name varchar(256) NOT NULL, 
     Last_Name varchar(256) NOT NULL, 
     Address varchar(256) NOT NULL, 
     Email varchar(256) NOT NULL, 
     Gender varchar(256),      		/* GENDER IS OPTIONAL */
     Languages varchar(256) NOT NULL, 
-    Gym_ID int NOT NULL,
-    PRIMARY KEY(Instructor_ID)
+    /*Gym_ID int NOT NULL,*/
+    Status_Active boolean NOT NULL, /* NEW STATUS ACTIVE */
+    PRIMARY KEY(Instructor_ID),
+    UNIQUE(Email)
   );
 
 CREATE TABLE promo_code (
 	Promo_Code  varchar(256) NOT NULL, 		/* PRIMARY KEY */
     Start_Date date NOT NULL, 
     End_Date date NOT NULL, 
-    Discount_Name varchar(256) NOT NULL, 
+    Description varchar(256) NOT NULL, 
     Discount_Amount int NOT NULL,
     PRIMARY KEY(Promo_Code)
-);
+); 
 
 CREATE TABLE fitness_class (
-	Class_ID int NOT NULL, 			/* PRIMARY KEY */
+	Class_ID int NOT NULL AUTO_INCREMENT, 			/* PRIMARY KEY */
     Class_Cost int NOT NULL,
     Class_Name varchar(256) NOT NULL, 
     Class_Duration int NOT NULL, 
@@ -99,14 +102,14 @@ CREATE TABLE fitness_class (
     Gym_ID int NOT NULL,
     Studio_Room_No varchar(256) NOT NULL,
     Class_Category varchar(256) NOT NULL,
+    Instructor_ID int NOT NULL,
     PRIMARY KEY(Class_ID)
 );
 
 CREATE TABLE gym (
 	Gym_ID int NOT NULL AUTO_INCREMENT,				/* PRIMARY KEY */
     Address varchar(256) NOT NULL,
-    Gym_Brand varchar(256) NOT NULL, 	/* if this is a small gym / not a franchise, Name of Gym goes here*/
-    Gym_Branch varchar(256),				/* OPTIONAL because not all gyms have brances */
+    Gym_Name varchar(256) NOT NULL, 	/* if this is a small gym / not a franchise, Name of Gym goes here*/
     PRIMARY KEY(Gym_ID)
 );
 
@@ -129,80 +132,36 @@ CREATE TABLE class_type (
 /* ADD FOREIGN KEYS */
 
 ALTER TABLE payment_for_classes
-	ADD	FOREIGN KEY (Class_ID) 			REFERENCES fitness_class(Class_ID) ON UPDATE CASCADE,
+	ADD	FOREIGN KEY (Class_ID) 			REFERENCES fitness_class(Class_ID) ON DELETE CASCADE,
+	ADD	FOREIGN KEY (Transaction_ID)	REFERENCES payment(Transaction_ID),
+	ADD	FOREIGN KEY (Customer_ID) 		REFERENCES customer(Customer_ID),    
+;
+
+ALTER TABLE payment_for_membership
+	ADD	FOREIGN KEY (Membership_ID) 	REFERENCES membership(Membership_ID),
 	ADD	FOREIGN KEY (Transaction_ID)	REFERENCES payment(Transaction_ID),
 	ADD	FOREIGN KEY (Customer_ID) 		REFERENCES customer(Customer_ID)    
 ;
-ALTER TABLE instructor_teaches_fitness_class 
-	ADD	FOREIGN KEY (Instructor_ID) 	REFERENCES instructor(Instructor_ID) ON UPDATE CASCADE,    
-	ADD	FOREIGN KEY (Class_ID) 			REFERENCES fitness_class(Class_ID) ON UPDATE CASCADE
-;
+
 ALTER TABLE instructor_can_teach_class_type 
-	ADD	FOREIGN KEY (Instructor_ID) 	REFERENCES instructor(Instructor_ID) ON UPDATE CASCADE,   
+	ADD	FOREIGN KEY (Instructor_ID) 	REFERENCES instructor(Instructor_ID),   
 	ADD	FOREIGN KEY (Class_Category) 	REFERENCES class_type(Class_Category) ON UPDATE CASCADE
 ;
 
 ALTER TABLE payment 
-	ADD	FOREIGN KEY (Membership_ID)			REFERENCES membership(Membership_ID) ON UPDATE CASCADE,
-	ADD	FOREIGN KEY (Customer_ID) 			REFERENCES customer(Customer_ID) ON UPDATE CASCADE,
-	ADD	FOREIGN KEY (Promo_Code) 			REFERENCES promo_code(Promo_Code) ON UPDATE CASCADE   
+	ADD	FOREIGN KEY (Promo_Code) 		REFERENCES promo_code(Promo_Code)   
 ;
 
 ALTER TABLE membership
-    ADD FOREIGN KEY (Customer_ID) REFERENCES customer(Customer_ID) ON UPDATE CASCADE
-;
-
-ALTER TABLE instructor
-	ADD	FOREIGN KEY (Gym_ID) REFERENCES gym(Gym_ID) ON UPDATE CASCADE
+    ADD FOREIGN KEY (Customer_ID) REFERENCES customer(Customer_ID)
 ;
 
 ALTER TABLE fitness_class 
-	ADD	FOREIGN KEY (Admin_ID) 			REFERENCES company_admin(Admin_ID) ON UPDATE CASCADE,    
-	ADD	CONSTRAINT fk_studio FOREIGN KEY (Gym_ID, Studio_Room_No) REFERENCES studio(Gym_ID, Studio_Room_No) ON UPDATE CASCADE,
-	ADD	FOREIGN KEY (Class_Category)	REFERENCES class_type(Class_Category) ON UPDATE CASCADE
+	ADD	FOREIGN KEY (Admin_ID) 			REFERENCES company_admin(Admin_ID),    
+	ADD	CONSTRAINT fk_studio FOREIGN KEY (Gym_ID, Studio_Room_No) REFERENCES studio(Gym_ID, Studio_Room_No),
+	ADD	FOREIGN KEY (Class_Category)	REFERENCES class_type(Class_Category),
+    ADD FOREIGN KEY (Instructor_ID)     REFERENCES instructor(Instructor_ID)
 ;
 
 ALTER TABLE studio 
-	ADD	FOREIGN KEY (Gym_ID)		REFERENCES gym(Gym_ID) ON UPDATE CASCADE ON DELETE CASCADE;
-
-;
-
-
-/* DUMMY VALUES */
-/*
-INSERT INTO t_payment(Transaction_ID, Transaction_Date, Transaction_Time, Transaction_Amount, Credit_Card_No, Membership_ID, Customer_ID, Promo_Code)
-	VALUES 
-		(1, 	2023-01-01, 	'11:00', 	1, 	111111, 	1,		1,	PROMO1),
-        (2, 	2023-02-02, 	'22:00', 	2, 	222222, 	NULL,	2,	PROMO2)
-	;
-
-INSERT INTO t_payment(Transaction_ID, Transaction_Date, Transaction_Time, Transaction_Amount, Credit_Card_No)
-	VALUES 
-		(1, 2023-01-01, '11:00', 1, 111111),
-        (2, 2023-02-02, '22:00', 2, 222222)
-	;
-
-INSERT INTO t_membership(Membership_ID, Tier)
-	VALUES 
-		
-	;
-
-*/
-
--- /* DISPLAY ALL TABLES */
-
--- SELECT * FROM 471schema.t_class_type ;
--- SELECT * FROM 471schema.t_company_admin ;
--- SELECT * FROM 471schema.t_customer ;
--- SELECT * FROM 471schema.t_fitness_class ;
--- SELECT * FROM 471schema.t_gym ;
--- SELECT * FROM 471schema.t_instructor ;
--- SELECT * FROM 471schema.t_instructor_can_teach_class_type ;
--- SELECT * FROM 471schema.t_instructor_teaches_fitness_class ;
--- SELECT * FROM 471schema.t_membership ;
--- SELECT * FROM 471schema.t_payment ;
--- SELECT * FROM 471schema.t_payment_for_classes ;
--- SELECT * FROM 471schema.t_payment_for_membership ;
--- SELECT * FROM 471schema.t_promo_code ;
--- SELECT * FROM 471schema.t_studio ;
-
+	ADD	FOREIGN KEY (Gym_ID)		REFERENCES gym(Gym_ID) ON DELETE CASCADE;
