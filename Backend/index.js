@@ -11,6 +11,6 @@ app.use(cors());
 app.use("/api/admin", adminRoutes);
 
 // Start the server
-app.listen(3000, () => {
+app.listen(8000, () => {
   console.log("Server listening on port 3000");
 });
