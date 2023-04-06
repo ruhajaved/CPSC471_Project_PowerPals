@@ -9,7 +9,7 @@ const {
 
 router.get("/getMembership", getMembership);
 
-router.post("/login", loginUser);
+router.post("/loginUser", loginUser);
 
 router.post("/SignUpUser", SignUpUser);
 
