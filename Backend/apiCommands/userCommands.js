@@ -1,7 +1,7 @@
 const { response } = require("express");
 const pool = require("../db");
 
--const getMembership = (req, res) => {
+getMembership = (req, res) => {
   res.status(200).send("working");
 }
 
