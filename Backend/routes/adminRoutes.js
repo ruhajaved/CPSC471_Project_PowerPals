@@ -7,13 +7,15 @@ const {
   updateGym,
   deleteGym,
   getAllGyms,
+
+  create
 } = require("../apiCommands/adminCommands");
 
 router.post("/login", loginAdmin);
 
 router.post("/createGym", createGym);
 
-// router.post("/updateGym", updateGym);
+router.post("/updateGym", updateGym);
 
 router.delete("/deleteGym/:id", deleteGym);
 

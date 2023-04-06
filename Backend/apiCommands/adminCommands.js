@@ -36,6 +36,7 @@ const loginAdmin = (req, res) => {
   });
 };
 
+//GET ALL GYMS
 const getAllGyms = (req, res) => {
   if (!req.headers["admin"]) {
     res.status(404).json({ error: "Need to be an admin" });
@@ -90,6 +91,8 @@ const getAllGyms = (req, res) => {
   });
 };
 
+
+//CREATE GYM 
 const createGym = (req, res) => {
   if (!req.headers["admin"]) {
     res.status(404).json({ error: "Need to be an admin" });
@@ -128,6 +131,8 @@ const createGym = (req, res) => {
   );
 };
 
+
+//DELETE THE GYM 
 const deleteGym = (req, res) => {
   if (!req.headers["admin"]) {
     res.status(404).json({ error: "Need to be an admin" });
@@ -176,4 +181,111 @@ const deleteGym = (req, res) => {
   });
 };
 
-module.exports = { loginAdmin, getAllGyms, createGym, deleteGym };
+
+
+//Get All INSTRUCTORS INFORMATION 
+const GetAllInstructors = (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
+  
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    }
+
+    connection.query(
+      "SELECT * FROM instructors",
+      (error, results, fields) => {
+        connection.release();
+      if (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+         return;
+        }
+      // Convert the object to an array and send as JSON
+      const response = Object.values(gyms);
+      res.json(response);
+      }
+    );
+  });
+};
+
+
+
+/////////
+
+
+
+
+
+//JULIE FUNCTION 
+const updateGym = (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
+  const gym_id = req.params.id;
+
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.status(500).send(`Error connecting to database: ${err}`);
+      return;
+    }
+    // Start a transaction to ensure data consistency
+    connection.beginTransaction((err) => {
+      if (err) {
+        connection.release();
+        res.status(500).send(`Error starting transaction: ${err}`);
+        return;
+      }
+      
+      // WHICH GYM THEY WANT TO UPDATE
+      connection.query(
+        "SELECT * FROM gym WHERE Gym_ID = ?",
+        gym_id,
+        (error, results, fields) => {
+          if (error) {
+            connection.rollback(() => {
+              connection.release();
+              res.status(500).send(`Error finding gym: ${error}`);
+            });
+            return;
+          }
+
+        // Update the gym and all of its corresponding studios
+      connection.query(
+        "UPDATE gym SET Address = ?, Gym_Name = ?, WHERE Gym_ID = gym_id",
+        gym.Address, gym.Gym_Name,
+        (error, results, fields) => {
+          if (error) {
+            connection.rollback(() => {
+              connection.release();
+              res.status(500).send(`Error updating gym: ${error}`);
+            });
+            return;
+          }
+          //Release Connection
+          connection.release();
+          if (results.affectedRows === 0) {
+            console.error(`Gym with id ${gym_id} not found`);
+            res.status(404).json({ message: "Gym not found" });
+          } else {
+            console.log(`Updated gym with id ${gym_id}`);
+            res.status(200).json({ message: "Gym Updated Succesfully" }); // No content
+          }
+        }
+      );
+    });
+  });
+});
+}
+
+
+
+
+module.exports = {  loginAdmin, getAllGyms, createGym, deleteGym, updateGym,
+                    GetAllInstructors };
