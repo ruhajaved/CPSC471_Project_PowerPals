@@ -1,6 +1,10 @@
 const { response } = require("express");
 const pool = require("../db");
 
+-const getMembership = (req, res) => {
+  res.status(200).send("working");
+}
+
 const loginUser = (req, res) => {
   const { email, password } = req.body;
   pool.getConnection((err, connection) => {
