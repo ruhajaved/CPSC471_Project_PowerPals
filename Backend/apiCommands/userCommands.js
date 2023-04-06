@@ -68,4 +68,4 @@ const SignUpUser = (req, res) => {
 
 
 
-module.exports = { loginUser, SignUpUser};
+module.exports = { getMembership, loginUser, SignUpUser};
