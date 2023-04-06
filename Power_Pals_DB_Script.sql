@@ -25,8 +25,7 @@ CREATE TABLE instructor_can_teach_class_type (
 
 CREATE TABLE payment (
 	Transaction_ID int NOT NULL AUTO_INCREMENT, 		/* PRIMARY KEY */
-	Trans_Date date NOT NULL, 
-	Trans_Time time NOT NULL, 
+	Trans_DateTime date NOT NULL, 
 	Amount int NOT NULL,
 	Credit_Card_No int NOT NULL,	
 	Promo_Code varchar(256),  			/* OPTIONAL */ 
