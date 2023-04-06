@@ -134,7 +134,7 @@ CREATE TABLE class_type (
 ALTER TABLE payment_for_classes
 	ADD	FOREIGN KEY (Class_ID) 			REFERENCES fitness_class(Class_ID) ON DELETE CASCADE,
 	ADD	FOREIGN KEY (Transaction_ID)	REFERENCES payment(Transaction_ID),
-	ADD	FOREIGN KEY (Customer_ID) 		REFERENCES customer(Customer_ID),    
+	ADD	FOREIGN KEY (Customer_ID) 		REFERENCES customer(Customer_ID)    
 ;
 
 ALTER TABLE payment_for_membership
