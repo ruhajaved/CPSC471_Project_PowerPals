@@ -96,38 +96,45 @@ const buyMembership = async (req, res) => {
     // Get membership + payment details from body.
     const {
         tier,
-        amount,
+        paymentAmount,
         creditCardNo,
         promoCode,
     } = req.body;
 
-    // if there is a promo code - doublecheck that it is valid - DO THIS HERE OR ON THE FRONTEND? OMITTED
+    // If there is a promo code - double check that it is valid.
+    if (promoCode)
+    {
+        const validPromoCode = await checkPromoCode(promoCode);
+        if(!validPromoCode){
+            res.status(500).send(`Invalid promo code ${promoCode}.`);
+            return;
+        }
+    }
 
     const connection = await pool.promise().getConnection();
     try{
         await connection.beginTransaction();
         // Create membership - save new membership ID.
         const mem_results = await connection.execute(
-            "INSERT INTO membership (Tier, Discount_Amount, Customer_ID) VALUES (?, 20, ?)", // THIS NEEDS TO BE AUTOMATED - tier to discount amount
+            "INSERT INTO membership (Tier, Customer_ID) VALUES (?, ?)",
             [tier, customerId]
         );
         const membershipId = mem_results[0].insertId;
         console.log(mem_results[0].insertId);
         
         // Create payment - account for the fact that promo code might be used or might not be.
-         // UTC?
         const dateTime = new Date();
         var payment_results;
         if (promoCode) {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No, Promo_Code) VALUES (?, ?, ?, ?)",
-                [dateTime, amount, creditCardNo, promoCode]
+                [dateTime, paymentAmount, creditCardNo, promoCode]
             );
         }
         else {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No) VALUES (?, ?, ?)",
-                [dateTime, amount, creditCardNo]
+                [dateTime, paymentAmount, creditCardNo]
             );
         }
         const transactionId = payment_results[0].insertId;
@@ -164,12 +171,20 @@ const buyClass = async (req, res) => {
     // Get membership + payment details from body.
     const {
         classId,
-        amount,
+        paymentAmount,
         creditCardNo,
         promoCode,
     } = req.body;
 
-    // If there is a promo code - doublecheck that it is valid - DO THIS HERE OR ON THE FRONTEND? OMITTED
+    // If there is a promo code - double check that it is valid.
+    if (promoCode)
+    {
+        const validPromoCode = await checkPromoCode(promoCode);
+        if(!validPromoCode){
+            res.status(500).send(`Invalid promo code ${promoCode}.`);
+            return;
+        }
+    }
 
     const connection = await pool.promise().getConnection();
     try{
@@ -178,17 +193,16 @@ const buyClass = async (req, res) => {
         // Create payment - account for the fact that promo code might be used or might not be.
          // UTC?
         const dateTime = new Date();
-        var paymentQuery;
         if (promoCode) {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No, Promo_Code) VALUES (?, ?, ?, ?)",
-                [dateTime, amount, creditCardNo, promoCode]
+                [dateTime, paymentAmount, creditCardNo, promoCode]
             );
         }
         else {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No) VALUES (?, ?, ?)",
-                [dateTime, amount, creditCardNo]
+                [dateTime, paymentAmount, creditCardNo]
             );
         }
         const transactionId = payment_results[0].insertId;
@@ -234,5 +248,26 @@ const getPaymentForClasses = async (req, res) => {
         }
     )
 };
+
+ async function checkPromoCode(promo_code) {
+    const connection = await pool.promise().getConnection();
+    try{
+        await connection.beginTransaction();
+        const results = await connection.execute(
+            "SELECT * FROM promo_code WHERE Promo_Code = ?",
+            [promo_code]
+        );
+        await connection.commit();
+        if (results[0].length > 0)
+            return true;
+        else
+            return false;
+    } catch(error) {
+        console.error(err);
+        await connection.rollback();
+    } finally {
+        await connection.release();
+    }
+}
 
 module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses };
