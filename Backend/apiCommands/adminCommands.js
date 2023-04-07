@@ -62,8 +62,8 @@ const getAllGyms = async (req, res) => {
           gyms[gymId].studios.push({
             gymId: gymId,
             roomNo: row.Studio_Room_No,
-            studioName: row.Studio_Name,
-            studioSize: row.Studio_Size,
+            name: row.Studio_Name,
+            size: row.Studio_Size,
           });
         }
       });
@@ -82,6 +82,7 @@ const createGym = async (req, res) => {
   }
   const gym = req.body.gym;
   const studios = req.body.studios;
+  console.log(req.body);
   // First, insert the new gym into the database
   pool.query(
     "INSERT INTO gym (Address, Gym_Name) VALUES (?, ?)",
@@ -148,12 +149,95 @@ const deleteGym = async (req, res) => {
   );
 };
 
+// const updateGym = async (req, res) => {
+//   if (!req.headers["admin"]) {
+//     res.status(404).json({ error: "Need to be an admin" });
+//     return;
+//   }
+
+//   const gymId = req.params.id;
+//   const gymUpdates = req.body.gym;
+//   const studios = req.body.studios;
+
+//   const gymQueryParts = [];
+//   const gymQueryValues = [];
+
+//   // Build the SET clause for the gym query
+//   Object.keys(gymUpdates).forEach((key) => {
+//     gymQueryParts.push(`${key} = ?`);
+//     gymQueryValues.push(gymUpdates[key]);
+//   });
+
+//   // Add the gym ID as the last value in the gym query values array
+//   gymQueryValues.push(gymId);
+
+//   // Update the gym
+//   const gymQuery = `UPDATE gym SET ${gymQueryParts.join(
+//     ", "
+//   )} WHERE Gym_ID = ?`;
+//   pool.query(gymQuery, gymQueryValues, (error, results, fields) => {
+//     if (error) {
+//       res.status(500).json({ message: "Error updating gym", error: error });
+//       return;
+//     }
+
+//     // Delete all of the studios for the gym
+//     const deleteQuery = "DELETE FROM studio WHERE Gym_ID = ?";
+//     pool.query(deleteQuery, [gymId], (error, results, fields) => {
+//       if (error) {
+//         res
+//           .status(500)
+//           .json({ message: "Error deleting studios", error: error });
+//         return;
+//       }
+
+//       // Insert each studio into the database
+//       pool.query(
+//         `INSERT INTO studio (Gym_ID, Studio_Room_No, Studio_Name, Studio_Size) VALUES ?`,
+//         [
+//           studios.map((studio) => [
+//             gymId,
+//             studio.roomNo,
+//             studio.name,
+//             studio.size,
+//           ]),
+//         ],
+//         (error, results, fields) => {
+//           if (error) {
+//             res
+//               .status(500)
+//               .json({ message: "Error creating studios", error: error });
+//             return;
+//           }
+//         }
+//       );
+
+//       res.json({ message: "Gym updated successfully", gymId: gymId });
+//       return;
+//     });
+//   });
+//   return;
+// };
+
+const query = (sql, values) => {
+  return new Promise((resolve, reject) => {
+    pool.query(sql, values, (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+};
+
 const updateGym = async (req, res) => {
   if (!req.headers["admin"]) {
     res.status(404).json({ error: "Need to be an admin" });
     return;
   }
 
+  console.log(req.body);
   const gymId = req.params.id;
   const gymUpdates = req.body.gym;
   const studios = req.body.studios;
@@ -170,51 +254,32 @@ const updateGym = async (req, res) => {
   // Add the gym ID as the last value in the gym query values array
   gymQueryValues.push(gymId);
 
-  // Update the gym
-  const gymQuery = `UPDATE gym SET ${gymQueryParts.join(
-    ", "
-  )} WHERE Gym_ID = ?`;
-  pool.query(gymQuery, gymQueryValues, (error, results, fields) => {
-    if (error) {
-      res.status(500).json({ message: "Error updating gym", error: error });
-      return;
-    }
+  try {
+    // Update the gym
+    const gymQuery = `UPDATE gym SET ${gymQueryParts.join(
+      ", "
+    )} WHERE Gym_ID = ?`;
+    await query(gymQuery, gymQueryValues);
 
     // Delete all of the studios for the gym
     const deleteQuery = "DELETE FROM studio WHERE Gym_ID = ?";
-    pool.query(deleteQuery, [gymId], (error, results, fields) => {
-      if (error) {
-        res
-          .status(500)
-          .json({ message: "Error deleting studios", error: error });
-        return;
-      }
+    await query(deleteQuery, [gymId]);
 
-      // Insert each studio into the database
-      pool.query(
-        `INSERT INTO studio (Gym_ID, Studio_Room_No, Studio_Name, Studio_Size) VALUES ?`,
-        [
-          studios.map((studio) => [
-            gymId,
-            studio.roomNo,
-            studio.name,
-            studio.size,
-          ]),
-        ],
-        (error, results, fields) => {
-          if (error) {
-            res
-              .status(500)
-              .json({ message: "Error creating studios", error: error });
-            return;
-          }
-        }
-      );
+    // Insert each studio into the database
+    const insertQuery = `INSERT INTO studio (Gym_ID, Studio_Room_No, Studio_Name, Studio_Size) VALUES ?`;
+    const studioValues = studios.map((studio) => [
+      gymId,
+      studio.roomNo,
+      studio.name,
+      studio.size,
+    ]);
+    await query(insertQuery, [studioValues]);
 
-      res.json({ message: "Gym updated successfully", gymId: gymId });
-      return;
-    });
-  });
+    res.json({ message: "Gym updated successfully", gymId: gymId });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating gym", error: error });
+  }
 };
 
 const getAllInstructors = async (req, res) => {

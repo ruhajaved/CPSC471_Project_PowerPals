@@ -1,22 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { AdminProvider } from "./Context/AdminContext";
+import Main from "./Main";
+import AdminLogin from "./Admin/AdminLogin";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>CPSC 471 Gym pals</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AdminProvider>
+      <Main />
+    </AdminProvider>
   );
 }
 
