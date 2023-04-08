@@ -35,7 +35,6 @@ CREATE TABLE payment (
 CREATE TABLE membership (
 	Membership_ID int NOT NULL AUTO_INCREMENT, 		/* PRIMARY KEY */
     Tier varchar(256) NOT NULL,
-    Discount_Amount int NOT NULL,
     Customer_ID int NOT NULL,
     PRIMARY KEY(Membership_ID)
 );

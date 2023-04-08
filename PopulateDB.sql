@@ -82,11 +82,11 @@ VALUES
     ('Eleazar','Swaniawski','03921 Bashirian Fields Reynoldsport, MT 07235','minnie59@example.net','Male','2015-05-23 00:47:48','7'),
     ('Esteban','Gorczany','2945 Douglas Mall Apt. 724 Port Candida, PA 96194','reynolds.ryley@example.net','Female','2018-10-22 05:49:00','7');
 
-INSERT INTO membership (Tier, Discount_Amount, Customer_ID)
+INSERT INTO membership (Tier, Customer_ID)
 VALUES
-    ("Gold", 20, 1),
-    ("Silver", 10, 2),
-    ("Bronze", 5, 3);
+    ("Gold", 1),
+    ("Silver", 2),
+    ("Bronze", 3);
 
 INSERT INTO promo_code (Promo_Code, Start_Date, End_Date, Description, Discount_Amount)
 VALUES ('ABCD','1986-05-08','1988-07-27','equatur.', 10),
