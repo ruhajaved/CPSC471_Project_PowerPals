@@ -97,8 +97,8 @@ CREATE TABLE fitness_class (
     No_of_Max_Ppl int NOT NULL,
     Class_Time time NOT NULL,  
 	Admin_ID int NOT NULL,
-    Gym_ID int NOT NULL,
-    Studio_Room_No varchar(256) NOT NULL,
+    Gym_ID int,
+    Studio_Room_No varchar(256),
     Class_Category varchar(256) NOT NULL,
     Instructor_ID int NOT NULL,
     PRIMARY KEY(Class_ID)
@@ -156,7 +156,7 @@ ALTER TABLE membership
 
 ALTER TABLE fitness_class 
 	ADD	FOREIGN KEY (Admin_ID) 			REFERENCES company_admin(Admin_ID),    
-	ADD	CONSTRAINT fk_studio FOREIGN KEY (Gym_ID, Studio_Room_No) REFERENCES studio(Gym_ID, Studio_Room_No),
+	ADD	CONSTRAINT fk_studio FOREIGN KEY (Gym_ID, Studio_Room_No) REFERENCES studio(Gym_ID, Studio_Room_No) ON DELETE CASCADE,
 	ADD	FOREIGN KEY (Class_Category)	REFERENCES class_type(Class_Category),
     ADD FOREIGN KEY (Instructor_ID)     REFERENCES instructor(Instructor_ID)
 ;
