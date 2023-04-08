@@ -2,6 +2,10 @@ import React, { useContext } from "react";
 import AdminLogin from "./Admin/AdminLogin";
 import AdminHomePage from "./Admin/AdminHomePage";
 import { AdminContext } from "./Context/AdminContext";
+import { CustomerContext } from "./Context/CustomerContext";
+import CustomerHomePage from "./Customer/CustomerHomePage";
+import Login from "./Login";
+import CustomerLogin from "./Customer/CustomerLogin";
 
 import {
   BrowserRouter,
@@ -13,18 +17,27 @@ import {
 
 function Main() {
   const { AdminID } = useContext(AdminContext);
+  const { CustomerID } = useContext(CustomerContext);
   let routes;
   console.log(AdminID);
+  console.log(CustomerID);
   if (AdminID) {
     routes = (
       <React.Fragment>
         <Route path="*" element={<AdminHomePage />} />
       </React.Fragment>
     );
-  } else {
+  } else if (CustomerID) {
     routes = (
       <React.Fragment>
-        <Route path="*" element={<AdminLogin />} />
+        <Route path="*" element={<CustomerHomePage />} />
+      </React.Fragment>
+    );
+  }
+  else {
+    routes = (
+      <React.Fragment>
+        <Route path="*" element={<Login />} />
       </React.Fragment>
     );
   }
