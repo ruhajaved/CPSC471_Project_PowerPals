@@ -268,7 +268,7 @@ const getPaymentForClasses = async (req, res) => {
     } finally {
         await connection.release();
     }
- }
+ };
 
 const customerSeeClasses = async (req, res) => {
     if (!req.headers["customerid"]) {
