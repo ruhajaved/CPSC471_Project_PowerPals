@@ -1,13 +1,14 @@
-
-
 import SeeClasses from "./SeeClasses";
 import SeeAllGyms from "./SeeAllGyms";
-
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import { CustomerContext } from "../Context/CustomerContext";
 
 function CustomerHomePage() {
   const [content, setContent] = useState(null); // default to gym content
+  const { CustomerID } = useContext(CustomerContext);
+
+//Julie Code 
+ // const [user, setUser] = useState({customerID: null});
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -42,8 +43,37 @@ function CustomerHomePage() {
     }
   };
 
+
+  console.log(CustomerID)
+
   return (
     <div>
+        {CustomerID === null ? 
+          <button
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            fontSize: "16px",
+            margin: "10px",
+            padding: "10px",
+            cursor: "pointer",
+          }}
+          //onClick={() => handleContentChange("gym")}
+        >
+          BUY MEMBERSHIP
+        </button>
+        :        
+        <div> Customer No.: {CustomerID}</div>} 
+        
+
+
+
+
+
+
+
+        
+
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           style={{
