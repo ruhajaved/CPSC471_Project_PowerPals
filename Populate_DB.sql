@@ -67,3 +67,30 @@ VALUES
     (12, 'Pilates Sculpt', 75, '2023-04-08', 'A low-impact, full-body workout that focuses on core strength and flexibility.', 10, '09:00:00', 3, 2, 'A102', 'Pilates', 4),
     (8, 'Zumba Party', 60, '2023-04-09', 'A fun and energetic dance workout that combines Latin and international music.', 30, '18:00:00', 2, 4, 'A104', 'Zumba', 2),
     (10, 'Yoga Flow', 60, '2023-04-10', 'A dynamic, flowing yoga class that links breath with movement.', 20, '10:00:00', 1, 1, 'A101', 'Yoga', 1);
+
+/* TODO: update password field to represent actual format */
+INSERT INTO customer (First_Name, Last_Name, Address, Email, Gender, Date_of_Birth, Password)
+VALUES
+    ('Alexandria','Frami','127 Carter Lakes Apt. 131 Ryanmouth, AK 75547','joanny97@example.net','Female','2019-10-26 16:00:59','2'),
+    ('Clemmie','Feest','208 Addie Rue Suite 397 Cartwrightberg, WV 07166','ngusikowski@example.net','Male','2016-03-22 01:30:41','1'),
+    ('Owen','Bartell','16900 Alexandra Locks East Edwinashire, DE 94053-0065','oscar11@example.org','Female','2014-03-11 21:05:20','2'),
+    ('Jana','Bechtelar','431 Darrin Squares Suite 876 South Oran, CA 74871','cayla.greenholt@example.net','Male','2015-10-06 06:56:48','2'),
+    ('Rosa','Von','2822 Kihn Forge Suite 999 Ullrichfurt, SC 70559','colt82@example.org','Female','2020-03-23 10:44:22','5'),
+    ('Elsie','Tremblay','3054 Morissette Extensions Gavinborough, OH 73897','wankunding@example.org','Female','2022-12-14 10:14:39','3'),
+    ('Vernice','Batz','9010 Lea Spur New Ramonastad, NY 50717','hyatt.niko@example.net','Female','2022-02-08 03:31:41','5'),
+    ('Mack','Effertz','4960 Ernser Mall Apt. 151 Port Amara, SD 83607','maritza.fritsch@example.net','Male','2021-01-09 04:34:25','9'),
+    ('Eleazar','Swaniawski','03921 Bashirian Fields Reynoldsport, MT 07235','minnie59@example.net','Male','2015-05-23 00:47:48','7'),
+    ('Esteban','Gorczany','2945 Douglas Mall Apt. 724 Port Candida, PA 96194','reynolds.ryley@example.net','Female','2018-10-22 05:49:00','7');
+
+INSERT INTO membership (Tier, Customer_ID)
+VALUES
+    ("Gold", 1),
+    ("Silver", 2),
+    ("Bronze", 3);
+
+INSERT INTO promo_code (Promo_Code, Start_Date, End_Date, Description, Discount_Amount)
+VALUES ('ABCD','1986-05-08','1988-07-27','equatur.', 10),
+('EFGH','2011-05-06','2017-09-17','t ci ducimus.', 20),
+('IJKL','1992-06-05','1980-09-26',' rem hic.', 30),
+('MNOP', '2003-05-15', '2014-11-12', ' fuga saepe ut.', 40),
+('QRST','1973-01-12', '2004-03-18', 'itaque qui.', 50);

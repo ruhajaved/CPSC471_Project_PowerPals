@@ -1,13 +1,14 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { AdminProvider } from "./Context/AdminContext";
+import { CustomerProvider } from "./Context/CustomerContext";
 import Main from "./Main";
-import AdminLogin from "./Admin/AdminLogin";
 
 function App() {
   return (
     <AdminProvider>
-      <Main />
+      <CustomerProvider>
+        <Main />
+      </CustomerProvider>
     </AdminProvider>
   );
 }
