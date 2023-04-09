@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
-import Popup from "reactjs-popup"; // import your Popup component here
 
 function ClassList() {
   const { customerID } = useContext(CustomerContext);
   const [classes, setClasses] = useState([]);
- // const [openUpdateForm, setOpenUpdateForm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,17 +21,6 @@ function ClassList() {
     };
     fetchData();
   }, []);
-
-  // const handleUpdateGym = (class) => {
-  //   console.log(class);
-  //   setSelectedGym(class);
-  //   setOpenUpdateForm(true);
-  // };
-
-  // const handleCloseUpdateForm = () => {
-  //   setSelectedGym(null);
-  //   setOpenUpdateForm(false);
-  // };
 
   return (
     <div style={{ margin: "auto", maxWidth: "80%" }}>

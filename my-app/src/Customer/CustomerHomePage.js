@@ -6,9 +6,6 @@ function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class"); // default to gym content
   const { CustomerID } = useContext(CustomerContext);
 
-//Julie Code 
- // const [user, setUser] = useState({customerID: null});
-
   const handleContentChange = (newContent) => {
     setContent(newContent);
   };
@@ -28,7 +25,7 @@ function CustomerHomePage() {
 
   return (
     <div>
-        {CustomerID === null ?                      // WHAT IS THIS? SHOULDN'T THIS BE MEMBERSHIP ID?
+        {CustomerID === null ? // TODO: needs to be updated to reflect membership ID
         <button
           style={{
             backgroundColor: "blue",
