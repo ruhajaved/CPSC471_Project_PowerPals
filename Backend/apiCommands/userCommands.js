@@ -268,6 +268,27 @@ const getPaymentForClasses = async (req, res) => {
     } finally {
         await connection.release();
     }
-}
+ }
+    const customerSeeClasses = async (req, res) => {
+        if (!req.headers["customerid"]) {
+            res.status(404).json({ error: "Need to have CustomerId header." });
+            return;
+          }
+        const customerId = req.headers["customerid"];
+    
+        pool.query(
+            "SELECT * FROM power_pals.fitness_class;",
+            [customerId],
+            (error, results, fields) => {
+                if (error) {
+                    console.log(error);
+                    res.status(500).json({ message: "Error getting classes", error: error });
+                    return;
+                    }
+                res.status(200).send(results);
+                return;
+            }
+        )
+    };
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses };
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, customerSeeClasses };
