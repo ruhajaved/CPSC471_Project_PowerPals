@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
 
 function ClassList() {
-  const { customerID } = useContext(CustomerContext);
+  const { CustomerID } = useContext(CustomerContext);
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ function ClassList() {
         "http://localhost:8000/api/user/getClasses",
         {
           headers: {
-            customerId: `${customerID}`,
+            customerId: `${CustomerID}`,
           },
         }
       );

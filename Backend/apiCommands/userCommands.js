@@ -289,8 +289,10 @@ const getClasses = async (req, res) => {
             fitness_class.Gym_ID = gym.Gym_ID 
             AND fitness_class.Instructor_ID = instructor.Instructor_ID 
             AND fitness_class.Class_Category = class_type.Class_Category 
-            AND fitness_class.Studio_Room_No = studio.Studio_Room_No;
+            AND fitness_class.Studio_Room_No = studio.Studio_Room_No
+            AND fitness_class.Class_Date >= ?;
         `,
+        new Date(new Date().toDateString()),
         (error, results) => {
             if (error) {
                 console.log(error);
