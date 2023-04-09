@@ -10,10 +10,10 @@ function ClassList() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "http://localhost:8000/api/user/getClassesAsUser",
+        "http://localhost:8000/api/user/getClasses",
         {
           headers: {
-            customer: `${customerID}`,
+            customerId: `${customerID}`,
           },
         }
       );
@@ -68,12 +68,12 @@ function ClassList() {
               <td style={{ padding: "10px" }}>{eachClass.No_of_Max_Ppl}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Time}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Category}</td>
-              <td style={{ padding: "10px" }}>{eachClass.Instructor_Name}</td>
-              <td style={{ padding: "10px" }}>{eachClass.Instructor_Gender}</td>
-              <td style={{ padding: "10px" }}>{eachClass.Instructor_Languages}</td>
+              <td style={{ padding: "10px" }}>{eachClass.First_Name + " " + eachClass.Last_Name}</td>
+              <td style={{ padding: "10px" }}>{eachClass.Gender}</td>
+              <td style={{ padding: "10px" }}>{eachClass.Languages}</td>
               <td style={{ padding: "10px" }}>{eachClass.Studio_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Intensity_Level}</td>
-              <td style={{ padding: "10px" }}>{eachClass.Equipment_Requirement}</td>
+              <td style={{ padding: "10px" }}>{eachClass.Equipment_Required}</td>
             </tr>
           ))}
         </tbody>
