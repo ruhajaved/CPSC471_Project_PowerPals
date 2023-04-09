@@ -21,13 +21,13 @@ function Main() {
   let routes;
   console.log(AdminID);
   console.log(CustomerID);
-  if (AdminID) {
+  if (AdminID !== "null") {
     routes = (
       <React.Fragment>
         <Route path="*" element={<AdminHomePage />} />
       </React.Fragment>
     );
-  } else if (CustomerID) {
+  } else if (CustomerID !== "null") {
     routes = (
       <React.Fragment>
         <Route path="*" element={<CustomerHomePage />} />

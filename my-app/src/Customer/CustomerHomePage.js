@@ -1,10 +1,9 @@
-import SeeClasses from "./SeeClasses";
-import SeeAllGyms from "./SeeAllGyms";
 import { useState, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
+import ClassList from "./ClassList";
 
 function CustomerHomePage() {
-  const [content, setContent] = useState(null); // default to gym content
+  const [content, setContent] = useState("fitness_class"); // default to gym content
   const { CustomerID } = useContext(CustomerContext);
 
 //Julie Code 
@@ -16,42 +15,23 @@ function CustomerHomePage() {
 
   const renderContent = () => {
     switch (content) {
-      case "gym":  // THIS IS THE LEFT HEADER
-        return (
-          <div>
-
-          </div>
-          // TYPE IN THE "FUNCTIONS HERE"     <AddInstructor />
-        );
-      case "fitness_class": // THIS IS THE LEFT HEADER
+      case "fitness_class":
         return (
           <div> 
-              < SeeClasses />            
+              < ClassList />            
           </div>
-          // TYPE IN THE "FUNCTIONS HERE"     <AddInstructor />
-        );
-        case "membership": // THIS IS THE LEFT HEADER
-        return (
-          <div> 
-              < SeeAllGyms />
-            
-          </div>
-          // TYPE IN THE "FUNCTIONS HERE"     <AddInstructor />
         );
       default:
         return null;
     }
   };
 
-
-  console.log(CustomerID)
-
   return (
     <div>
-        {CustomerID === null ? 
-          <button
+        {CustomerID === null ?                      // WHAT IS THIS? SHOULDN'T THIS BE MEMBERSHIP ID?
+        <button
           style={{
-            backgroundColor: "transparent",
+            backgroundColor: "blue",
             border: "none",
             fontSize: "16px",
             margin: "10px",
@@ -65,15 +45,6 @@ function CustomerHomePage() {
         :        
         <div> Customer No.: {CustomerID}</div>} 
         
-
-
-
-
-
-
-
-        
-
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           style={{
@@ -95,39 +66,10 @@ function CustomerHomePage() {
               padding: "10px",
               cursor: "pointer",
             }}
-            onClick={() => handleContentChange("gym")}
-          >
-            View All Gyms
-          </button>
-          <button
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              fontSize: "16px",
-              margin: "10px",
-              padding: "10px",
-              cursor: "pointer",
-            }}
             onClick={() => handleContentChange("fitness_class")}
           >
             View All Classes
           </button>
-          <button
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              fontSize: "16px",
-              margin: "10px",
-              padding: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => handleContentChange("membership")} // SIGN UP FOR MEMBERSHIP HERE
-          >
-            Sign Up For Membership            
-          </button> 
-          
-
-          
         </div>
         <div className="content">{renderContent()}</div>
       </div>
