@@ -1,5 +1,6 @@
 
 
+import SeeClasses from "./SeeClasses";
 import SeeAllGyms from "./SeeAllGyms";
 
 import { useState } from "react";
@@ -24,8 +25,7 @@ function CustomerHomePage() {
       case "fitness_class": // THIS IS THE LEFT HEADER
         return (
           <div> 
-              < SeeAllGyms />
-            
+              < SeeClasses />            
           </div>
           // TYPE IN THE "FUNCTIONS HERE"     <AddInstructor />
         );
@@ -95,6 +95,8 @@ function CustomerHomePage() {
           >
             Sign Up For Membership            
           </button> 
+          
+
           
         </div>
         <div className="content">{renderContent()}</div>
