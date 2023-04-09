@@ -37,7 +37,7 @@ const signUpUser = async (req, res) => {
         gender,
         dateOfBirth,
         password
-    } = req.body;
+    } = req.body.customer;
 
     pool.query(
         "INSERT INTO customer (First_Name, Last_Name, Address, Email, Gender, Date_Of_Birth, Password) VALUES (?, ?, ?, ?, ?, ?, ?)",

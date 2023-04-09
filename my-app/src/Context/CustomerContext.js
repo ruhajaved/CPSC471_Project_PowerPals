@@ -15,9 +15,7 @@ export const CustomerProvider = ({ children }) => {
   }, [customerID]);
 
   const login = (id) => {
-    console.log(customerID + " " + id);
     setCustomerID(id);
-    console.log(customerID + " " + id);
   };
 
   const logout = () => {

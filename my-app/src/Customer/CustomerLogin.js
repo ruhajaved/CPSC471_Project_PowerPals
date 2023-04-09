@@ -7,7 +7,6 @@ function CustomerLogin() {
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
-    console.log("here" + email);
     event.preventDefault();
     try {
       const response = await fetch("http://localhost:8000/api/user/loginUser", {
