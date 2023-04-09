@@ -270,7 +270,7 @@ const getPaymentForClasses = async (req, res) => {
     }
  };
 
-const customerSeeClasses = async (req, res) => {
+const getClasses = async (req, res) => {
     if (!req.headers["customerid"]) {
         res.status(404).json({ error: "Need to have CustomerId header." });
         return;
@@ -303,4 +303,4 @@ const customerSeeClasses = async (req, res) => {
     )
 };
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, customerSeeClasses };
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses };
