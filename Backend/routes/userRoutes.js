@@ -8,7 +8,7 @@ const {
   buyMembership,
   buyClass,
   getPaymentForClasses,
-  customerSeeClasses
+  getClasses
 } = require("../apiCommands/userCommands");
 
 router.post("/loginUser", loginUser);
@@ -17,6 +17,6 @@ router.get("/getMembership", getMembership);
 router.post("/buyMembership", buyMembership);
 router.post("/buyClass", buyClass);
 router.get("/getPaymentForClasses", getPaymentForClasses);
-router.get("/customerSeeClasses", customerSeeClasses);
+router.get("/getClasses", getClasses);
 
 module.exports = router;
