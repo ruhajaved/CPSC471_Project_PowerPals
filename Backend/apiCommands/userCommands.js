@@ -268,6 +268,39 @@ const getPaymentForClasses = async (req, res) => {
     } finally {
         await connection.release();
     }
-}
+ };
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses };
+const getClasses = async (req, res) => {
+    if (!req.headers["customerid"]) {
+        res.status(404).json({ error: "Need to have CustomerId header." });
+        return;
+    }
+    const customerId = req.headers["customerid"];
+
+    pool.query(
+        `SELECT *
+        FROM 
+            power_pals.fitness_class as fitness_class, 
+            power_pals.instructor as instructor, 
+            power_pals.gym as gym, 
+            power_pals.class_type as class_type, 
+            power_pals.studio as studio 
+        WHERE 
+            fitness_class.Gym_ID = gym.Gym_ID 
+            AND fitness_class.Instructor_ID = instructor.Instructor_ID 
+            AND fitness_class.Class_Category = class_type.Class_Category 
+            AND fitness_class.Studio_Room_No = studio.Studio_Room_No;
+        `,
+        (error, results) => {
+            if (error) {
+                console.log(error);
+                res.status(500).json({ message: "Error getting classes", error: error });
+                return;
+            }
+            res.status(200).send(results);
+            return;
+        }
+    )
+};
+
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses };
