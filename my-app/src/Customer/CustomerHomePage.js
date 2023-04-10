@@ -3,9 +3,11 @@ import ClassList from "./ClassList";
 import MembershipBuy from "./MembershipBuy";
 import React, { useState, useEffect, useContext } from "react";
 
+
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class"); // default to gym content
   const { CustomerID } = useContext(CustomerContext);
+  const [member, setMember] = useState(null);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -23,7 +25,7 @@ function CustomerHomePage() {
         return null;
     }
   };
-  const [member, setMember] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -42,7 +44,7 @@ function CustomerHomePage() {
   }, [] );
 
 
-  const renderMembership = () => {
+  const conditionalRenderMembership = () => {
     if (member?.Membership_ID == null) {
       return (
         <MembershipBuy></MembershipBuy>
@@ -53,10 +55,9 @@ function CustomerHomePage() {
   return (
     <div>
       <div> 
-        Customer No.: {CustomerID} <br/>
         Membership No.:  {member?.Membership_ID} <br/>
         Tier Level:   {member?.Tier} <br/>
-        {renderMembership()}
+        {conditionalRenderMembership()}
       </div>
     
         

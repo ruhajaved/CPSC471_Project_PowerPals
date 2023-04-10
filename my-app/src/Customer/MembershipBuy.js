@@ -20,15 +20,26 @@ function MembershipBuy() {
     setTierChoice(event.target.value);
   }
 
-  // const [dictKey, setDictKey] = useState('');
-  // const [dictValue, setDictValue] = useState('');
-  // var dict = this.dict;
+  const [member, setMember] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:8000/api/user/getMembership",
+        {
+          headers: {
+            customerId: `${CustomerID}`,
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setMember(data);
+    };
+    fetchData();
+  }, [] );
 
   const handleBuyMem = (close) => {
-    const determinePayAmount = {
-      
-    }
-    
+       
     const requestBody = {
       creditCardNo: creditCardNo,
       promoCode: promoCode,
@@ -44,8 +55,8 @@ function MembershipBuy() {
     .then((response) => response.json())
     .then((data) => { close(); console.log(data); })
     .catch((error) => console.error(error));
-
-    window.location.reload(false);
+    // This refreshes the page
+    window.location.reload(true);
   };
 
  
