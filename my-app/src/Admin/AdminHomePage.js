@@ -27,6 +27,12 @@ function AdminHomePage() {
             <InstructorList />
           </div>
         );
+      case "classes":
+        return (
+          <div>
+
+          </div>
+        );
       default:
         return null;
     }
@@ -71,6 +77,19 @@ function AdminHomePage() {
             onClick={() => handleContentChange("instructor")}
           >
             Instructors
+          </button>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("classes")}
+          >
+            Classes
           </button>
         </div>
         <div className="content">{renderContent()}</div>

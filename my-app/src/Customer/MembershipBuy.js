@@ -6,29 +6,28 @@ function MembershipBuy(eachMember) {
     const [ creditCardNo, setCreditCardNo ] = useState("");
     const [ promoCode, setPromoCode ] = useState("");
     const [ tier, setTierChoice ] = useState("");
+   // const [ tierCost, determineTierCost ] = useState("");
     const { CustomerID } = useContext(CustomerContext);
 
     const handleCreditChange = (event) => {
         setCreditCardNo(event.target.value);
     }
-
     const handlePromoCodeChange = (event) => {
         setPromoCode(event.target.value);
     }
-    //JULIE CODE 
     const handleTierChange = (event) => {
       setTierChoice(event.target.value);
     }
 
     const handleBuyMem = (close) => {
         const requestBody = {
-          //JULIE CODE HERE WITH paymentAmount - trying to use 
-          // dictionary here 
-          // for now, just used a constant k = 50
-          paymentAmount: 50,
           creditCardNo: creditCardNo,
           promoCode: promoCode,
-          tier: tier
+          tier: tier,
+
+          // for now, just used a constant k = 50
+          paymentAmount: 50,
+
         };
         fetch("http://localhost:8000/api/user/buyMembership", {
           method: "POST",
@@ -38,7 +37,6 @@ function MembershipBuy(eachMember) {
           .then((response) => response.json())
           .then((data) => { close(); console.log(data); })
           .catch((error) => console.error(error));
-    
         };
 
     return (
@@ -76,13 +74,12 @@ function MembershipBuy(eachMember) {
                     onChange={handlePromoCodeChange}
                   />
                 </label>
-                {/* JULIE CODE - FOR TIER CHANGE */}
                 <label style={{ color: "#ffffff" }}>
                   Membership:
                   <select
                     type="text"
                     value={tier}
-                    onChange={handleTierChange}
+                    onChange={handleTierChange} // Change the tier options shown to customer here
                     >
                     <option value=""></option>
                     <option value="Gold">Gold - $15 off </option>
