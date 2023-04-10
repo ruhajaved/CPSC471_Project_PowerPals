@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
 import ClassList from "./ClassList";
+import MembershipBuy from "./MembershipBuy";
+import React, { useState, useEffect, useContext } from "react";
 
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class"); // default to gym content
@@ -18,27 +19,43 @@ function CustomerHomePage() {
               < ClassList />            
           </div>
         );
+
         case "buy_membership":
           return (
             <div> 
-                < MembershipNo />            
+                < MembershipBuy />            
             </div>
           );
+
       default:
         return null;
     }
   };
-
- //const { MembershipID } = findMembershipNo(CustomerID);
+  const [member, setMember] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:8000/api/user/getMembership",
+        {
+          headers: {
+            customerId: `${CustomerID}`,
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setMember(data);
+    };
+    fetchData();
+  }, []);
 
 
   return (
     <div>
-        <div> 
-            Customer No.: {CustomerID} <br/>
-            Membership No.: '3' 
-        </div>  
-               
+      <div> 
+        Customer No.: {CustomerID} <br/>
+        Membership No.: {member?.Membership_ID}
+      </div>  
         <button
           style={{
             backgroundColor: "yellow",
@@ -48,12 +65,10 @@ function CustomerHomePage() {
             padding: "10px",
             cursor: "pointer",
           }}
-          onClick={() => handleContentChange("buy_membership")}
-        >
+          //onClick={(e) => member !== null ? e.preventDefault():handleContentChange("buy_membership")}
+          onClick={() => handleContentChange("buy_membership")}>
           BUY MEMBERSHIP
         </button>
-        
-
         
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
@@ -81,20 +96,6 @@ function CustomerHomePage() {
             View All Classes
           </button>
           
-{/* JULIE CODE */}
-          <button
-            style={{
-              backgroundColor: "transparent",
-              border: "none",
-              fontSize: "16px",
-              margin: "10px",
-              padding: "10px",
-              cursor: "pointer",
-            }}
-            onClick={() => handleContentChange("buy_membership")}
-          >
-            MeowMeow
-          </button>
         </div>
         <div className="content">{renderContent()}</div>
       </div>

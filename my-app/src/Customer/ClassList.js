@@ -47,7 +47,7 @@ function ClassList() {
         </thead>
         <tbody>
           {classes.map((eachClass) => (
-            <tr key={eachClass.classId} style={{ borderBottom: "1px solid #ddd" }}>
+            <tr key={eachClass.memberId} style={{ borderBottom: "1px solid #ddd" }}>
               <td style={{ padding: "10px" }}>{eachClass.Class_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Cost}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Duration}</td>
