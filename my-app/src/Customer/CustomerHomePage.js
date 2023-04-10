@@ -50,12 +50,15 @@ function CustomerHomePage() {
   }, []);
 
 
+
+
+
   return (
     <div>
       <div> 
         Customer No.: {CustomerID} <br/>
-        Membership No.: {member?.Membership_ID}
-      </div>  
+        Membership No.:  {member?.Membership_ID}        </div>
+
         <button
           style={{
             backgroundColor: "yellow",

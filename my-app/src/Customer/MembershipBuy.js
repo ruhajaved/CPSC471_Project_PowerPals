@@ -5,8 +5,8 @@ import { CustomerContext } from "../Context/CustomerContext";
 function MembershipBuy(eachMember) {
     const [ creditCardNo, setCreditCardNo ] = useState("");
     const [ promoCode, setPromoCode ] = useState("");
-    const { CustomerID } = useContext(CustomerContext);
     const [ tier, setTierChoice ] = useState("");
+    const { CustomerID } = useContext(CustomerContext);
 
     const handleCreditChange = (event) => {
         setCreditCardNo(event.target.value);
@@ -20,10 +20,11 @@ function MembershipBuy(eachMember) {
       setTierChoice(event.target.value);
     }
 
-    const handleBuy = (close) => {
+    const handleBuyMem = (close) => {
         const requestBody = {
           //JULIE CODE HERE WITH paymentAmount - trying to use 
           // dictionary here 
+          // for now, just used a constant k = 50
           paymentAmount: 50,
           creditCardNo: creditCardNo,
           promoCode: promoCode,
@@ -42,19 +43,19 @@ function MembershipBuy(eachMember) {
 
     return (
       
-        <Popup
-          trigger={<button>Buy Membership</button>}          
-          modal
-          closeOnDocumentClick
-          contentStyle={{
-            background: "#1c1c1c",
-            width: "80%",
-            borderRadius: "15px",
-            padding: "1em",
-            border: "none",
-          }}
-          overlayStyle={{ background: "rgba(0, 0, 0, 0.7)" }}
-        >
+      <Popup
+        trigger={<button>Buy Membership</button>}          
+        modal
+        closeOnDocumentClick
+        contentStyle={{
+          background: "#1c1c1c",
+          width: "80%",
+          borderRadius: "15px",
+          padding: "1em",
+          border: "none",
+        }}
+        overlayStyle={{ background: "rgba(0, 0, 0, 0.7)" }}
+      >
           {(close) => (
             <div className="popup">
               <h2 style={{ color: "#ffffff" }}>Buy Membership</h2>
@@ -75,6 +76,7 @@ function MembershipBuy(eachMember) {
                     onChange={handlePromoCodeChange}
                   />
                 </label>
+                {/* JULIE CODE - FOR TIER CHANGE */}
                 <label style={{ color: "#ffffff" }}>
                   Membership:
                   <select
@@ -99,7 +101,7 @@ function MembershipBuy(eachMember) {
                     marginTop: "1em",
                     marginRight: "1em",
                   }}
-                  onClick={(event) => handleBuy(close)}
+                  onClick={(event) => handleBuyMem(close)}
                 >
                   Buy
                 </button>
