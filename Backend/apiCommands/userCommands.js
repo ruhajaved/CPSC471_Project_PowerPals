@@ -106,7 +106,7 @@ const buyMembership = async (req, res) => {
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
         if(!promoCodeDiscount){
-            res.status(500).send(`Invalid or old promo code ${promoCode}.`);
+            res.status(500).send({message: `Invalid or old promo code ${promoCode}.`});
             return;
         }
         var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
@@ -147,7 +147,7 @@ const buyMembership = async (req, res) => {
         );
 
         await connection.commit();
-        res.status(200).send(`New membership added with ID ${membershipId}.`);
+        res.status(200).send({membershipId: `${membershipId}`});
         return;
 
     }
@@ -182,7 +182,7 @@ const buyClass = async (req, res) => {
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
         if(!promoCodeDiscount){
-            res.status(500).send(`Invalid or old promo code ${promoCode}.`);
+            res.status(500).send({message: `Invalid or old promo code ${promoCode}.`});
             return;
         }
         var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
@@ -265,9 +265,9 @@ const getPaymentForClasses = async (req, res) => {
             [promo_code]
         );
         await connection.commit();
-        console.log(results[0][0].Discount_Amount);
         if (results[0].length > 0)
         {
+            console.log(results[0][0].Discount_Amount);
             if (results[0][0].End_Date >= new Date(new Date().toDateString()))
             {
                 return parseInt(results[0][0].Discount_Amount);
@@ -276,7 +276,7 @@ const getPaymentForClasses = async (req, res) => {
         else
             return 0;
     } catch(error) {
-        console.error(err);
+        console.error(error);
         await connection.rollback();
     } finally {
         await connection.release();

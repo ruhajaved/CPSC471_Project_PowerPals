@@ -19,12 +19,6 @@ function CustomerHomePage() {
               < ClassList />            
           </div>
         );
-        case "buy_membership":
-          return (
-            <div> 
-                < MembershipBuy />            
-            </div>
-          );
       default:
         return null;
     }
@@ -45,33 +39,26 @@ function CustomerHomePage() {
       setMember(data);
     };
     fetchData();
-    console.log(member)
-    console.log(member)
-  }, []);
+  }, [] );
+
+
+  const renderMembership = () => {
+    if (member?.Membership_ID == null) {
+      return (
+        <MembershipBuy></MembershipBuy>
+      )
+    }
+  }
 
   return (
     <div>
       <div> 
-        Customer No.: <br/>
-        {CustomerID} <br/>
-        Membership No.: {member?.Membership_ID}
+        Customer No.: {CustomerID} <br/>
+        Membership No.:  {member?.Membership_ID} <br/>
+        Tier Level:   {member?.Tier} <br/>
+        {renderMembership()}
       </div>
-
-      <button
-        style={{ // This is the Buy membership Button 
-          backgroundColor: "yellow",
-          border: "none",
-          fontSize: "16px",
-          margin: "10px",
-          padding: "10px",
-          cursor: "pointer",
-        }}
-        // If we want the button to be UNCLICKABLE - use this code 
-        //onClick={(e) => member !== null ? e.preventDefault():handleContentChange("buy_membership")}
-        // If we want button to take us to "Buy Membership", use this code
-        onClick={() => handleContentChange("buy_membership")}>
-        BUY MEMBERSHIP
-      </button>
+    
         
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div

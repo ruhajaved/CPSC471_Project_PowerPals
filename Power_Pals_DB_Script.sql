@@ -27,7 +27,7 @@ CREATE TABLE payment (
 	Transaction_ID int NOT NULL AUTO_INCREMENT, 		/* PRIMARY KEY */
 	Trans_DateTime date NOT NULL, 
 	Amount int NOT NULL,
-	Credit_Card_No int NOT NULL,	
+	Credit_Card_No bigint NOT NULL,	
 	Promo_Code varchar(256),  			/* OPTIONAL */ 
     PRIMARY KEY(Transaction_ID)
 );
