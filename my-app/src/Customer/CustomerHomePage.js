@@ -1,10 +1,13 @@
-import { useState, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
 import ClassList from "./ClassList";
+import MembershipBuy from "./MembershipBuy";
+import React, { useState, useEffect, useContext } from "react";
+
 
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class"); // default to gym content
   const { CustomerID } = useContext(CustomerContext);
+  const [member, setMember] = useState(null);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -23,24 +26,40 @@ function CustomerHomePage() {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        "http://localhost:8000/api/user/getMembership",
+        {
+          headers: {
+            customerId: `${CustomerID}`,
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setMember(data);
+    };
+    fetchData();
+  }, [] );
+
+
+  const conditionalRenderMembership = () => {
+    if (member?.Membership_ID == null) {
+      return (
+        <MembershipBuy></MembershipBuy>
+      )
+    }
+  }
+
   return (
     <div>
-        {CustomerID === null ? // TODO: needs to be updated to reflect membership ID
-        <button
-          style={{
-            backgroundColor: "blue",
-            border: "none",
-            fontSize: "16px",
-            margin: "10px",
-            padding: "10px",
-            cursor: "pointer",
-          }}
-          //onClick={() => handleContentChange("gym")}
-        >
-          BUY MEMBERSHIP
-        </button>
-        :        
-        <div> Customer No.: {CustomerID}</div>} 
+      <div> 
+        Membership No.:  {member?.Membership_ID} <br/>
+        Tier Level:   {member?.Tier} <br/>
+        {conditionalRenderMembership()}
+      </div>
+    
         
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div

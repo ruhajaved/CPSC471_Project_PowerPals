@@ -30,13 +30,13 @@ function ClassList() {
         <thead>
           <tr style={{ borderBottom: "1px solid #ddd" }}>
             <th style={{ textAlign: "left", padding: "10px" }}>Class Name</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Cost</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Duration (Weeks)</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Start Date</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Description</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Cost</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Duration (Weeks)</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Date</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Description</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Max Seats</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Time</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Class Category</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Time</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Category</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Name</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Gender</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Languages</th>
@@ -47,11 +47,11 @@ function ClassList() {
         </thead>
         <tbody>
           {classes.map((eachClass) => (
-            <tr key={eachClass.classId} style={{ borderBottom: "1px solid #ddd" }}>
+            <tr key={eachClass.Class_ID} style={{ borderBottom: "1px solid #ddd" }}>
               <td style={{ padding: "10px" }}>{eachClass.Class_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Cost}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Duration}</td>
-              <td style={{ padding: "10px" }}>{eachClass.Class_Date}</td>
+              <td style={{ padding: "10px" }}>{new Date(eachClass.Class_Date).toDateString()}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Description}</td>
               <td style={{ padding: "10px" }}>{eachClass.No_of_Max_Ppl}</td>
               <td style={{ padding: "10px" }}>{eachClass.Class_Time}</td>
