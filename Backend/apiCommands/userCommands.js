@@ -105,8 +105,6 @@ const buyMembership = async (req, res) => {
     if (promoCode)
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
-        console.log("here");
-        console.log(promoCodeDiscount);
         if(!promoCodeDiscount){
             res.status(500).send(`Invalid or old promo code ${promoCode}.`);
             return;
@@ -183,8 +181,6 @@ const buyClass = async (req, res) => {
     if (promoCode)
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
-        console.log("here");
-        console.log(promoCodeDiscount);
         if(!promoCodeDiscount){
             res.status(500).send(`Invalid or old promo code ${promoCode}.`);
             return;
