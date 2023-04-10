@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CustomerContext } from "../Context/CustomerContext";
+import BuyClass from "./BuyClass";
 
 function ClassList() {
   const { CustomerID } = useContext(CustomerContext);
@@ -61,6 +62,9 @@ function ClassList() {
               <td style={{ padding: "10px" }}>{eachClass.Studio_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Intensity_Level}</td>
               <td style={{ padding: "10px" }}>{eachClass.Equipment_Required}</td>
+              <td style={{ padding: "10px" }}>
+                <BuyClass eachClass={eachClass} />
+              </td>
             </tr>
           ))}
         </tbody>

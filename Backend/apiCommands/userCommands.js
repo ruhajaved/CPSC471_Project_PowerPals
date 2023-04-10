@@ -104,11 +104,12 @@ const buyMembership = async (req, res) => {
     // If there is a promo code - double check that it is valid.
     if (promoCode)
     {
-        const validPromoCode = await checkPromoCode(promoCode);
-        if(!validPromoCode){
-            res.status(500).send(`Invalid promo code ${promoCode}.`);
+        const promoCodeDiscount = await checkPromoCode(promoCode);
+        if(!promoCodeDiscount){
+            res.status(500).send(`Invalid or old promo code ${promoCode}.`);
             return;
         }
+        var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
     }
 
     const connection = await pool.promise().getConnection();
@@ -128,7 +129,7 @@ const buyMembership = async (req, res) => {
         if (promoCode) {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No, Promo_Code) VALUES (?, ?, ?, ?)",
-                [dateTime, paymentAmount, creditCardNo, promoCode]
+                [dateTime, adjustedPaymentAmount, creditCardNo, promoCode]
             );
         }
         else {
@@ -179,11 +180,12 @@ const buyClass = async (req, res) => {
     // If there is a promo code - double check that it is valid.
     if (promoCode)
     {
-        const validPromoCode = await checkPromoCode(promoCode);
-        if(!validPromoCode){
-            res.status(500).send(`Invalid promo code ${promoCode}.`);
+        const promoCodeDiscount = await checkPromoCode(promoCode);
+        if(!promoCodeDiscount){
+            res.status(500).send(`Invalid or old promo code ${promoCode}.`);
             return;
         }
+        var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
     }
 
     const connection = await pool.promise().getConnection();
@@ -196,7 +198,7 @@ const buyClass = async (req, res) => {
         if (promoCode) {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No, Promo_Code) VALUES (?, ?, ?, ?)",
-                [dateTime, paymentAmount, creditCardNo, promoCode]
+                [dateTime, adjustedPaymentAmount, creditCardNo, promoCode]
             );
         }
         else {
@@ -214,7 +216,12 @@ const buyClass = async (req, res) => {
         );
 
         await connection.commit();
-        res.status(200).send(`Class successfully bought.`);
+        const response = {message: "Class successfully bought.", 
+                            classId: classId, 
+                            transactionId: transactionId,
+                            customerId: customerId};
+        console.log(response);
+        res.status(200).send(response);
         return;
 
     }
@@ -258,10 +265,16 @@ const getPaymentForClasses = async (req, res) => {
             [promo_code]
         );
         await connection.commit();
+        console.log(results[0][0].Discount_Amount);
         if (results[0].length > 0)
-            return true;
+        {
+            if (results[0][0].End_Date >= new Date(new Date().toDateString()))
+            {
+                return parseInt(results[0][0].Discount_Amount);
+            }
+        }
         else
-            return false;
+            return 0;
     } catch(error) {
         console.error(err);
         await connection.rollback();
