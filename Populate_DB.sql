@@ -89,8 +89,8 @@ VALUES
     ("Bronze", 3);
 
 INSERT INTO promo_code (Promo_Code, Start_Date, End_Date, Description, Discount_Amount)
-VALUES ('ABCD','1986-05-08','1988-07-27','equatur.', 10),
-('EFGH','2011-05-06','2017-09-17','t ci ducimus.', 20),
+VALUES ('ABCD','1986-05-08','2024-07-27','equatur.', 10),
+('EFGH','2011-05-06','2030-09-17','t ci ducimus.', 20),
 ('IJKL','1992-06-05','1980-09-26',' rem hic.', 30),
 ('MNOP', '2003-05-15', '2014-11-12', ' fuga saepe ut.', 40),
 ('QRST','1973-01-12', '2004-03-18', 'itaque qui.', 50);
