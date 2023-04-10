@@ -1,8 +1,11 @@
-import GymList from "./GymList";
-import InstructorList from "./InstructorList";
-import AddGym from "./AddGym";
 import { useState } from "react";
+import GymList from "./GymList";
+import AddGym from "./AddGym";
+import InstructorList from "./InstructorList";
 import AddInstructor from "./AddInstructor";
+import ClassList from "./ClassList";
+import AddClass from "./AddClass";
+import ClassTypeList from "./ClassTypeList";
 
 function AdminHomePage() {
   const [content, setContent] = useState("gym"); // default to gym content
@@ -25,6 +28,19 @@ function AdminHomePage() {
           <div>
             <AddInstructor />
             <InstructorList />
+          </div>
+        );
+      case "class":
+        return (
+          <div>
+            <AddClass />
+            <ClassList />
+          </div>
+        );
+      case "classtype":
+        return (
+          <div>
+            <ClassTypeList />
           </div>
         );
       default:
@@ -71,6 +87,32 @@ function AdminHomePage() {
             onClick={() => handleContentChange("instructor")}
           >
             Instructors
+          </button>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("class")}
+          >
+            Classes
+          </button>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("classtype")}
+          >
+            Class Types
           </button>
         </div>
         <div className="content">{renderContent()}</div>

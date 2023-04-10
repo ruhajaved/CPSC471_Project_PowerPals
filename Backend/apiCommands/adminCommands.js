@@ -406,7 +406,7 @@ const updateInstructor = async (req, res) => {
     for (const category of classes) {
       await connection.execute(insertQuery, [instructorId, category]);
     }
-
+    console.log("MADE IT HERE");
     await connection.commit();
     res.status(200).send(`Instructor ${instructorId} has been updated.`);
   } catch (err) {
@@ -457,7 +457,8 @@ const createClass = async (req, res) => {
     Studio_Room_No,
     Class_Category,
     Instructor_ID,
-  } = req.body;
+  } = req.body.classInfo;
+  console.log(req.body.classInfo);
 
   const sql = `INSERT INTO fitness_class (Class_Cost, Class_Name, Class_Duration, Class_Date, Class_Description, No_of_Max_Ppl, Class_Time, Admin_ID, Gym_ID, Studio_Room_No, Class_Category, Instructor_ID)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -465,7 +466,7 @@ const createClass = async (req, res) => {
   pool.query(
     sql,
     [
-      Class_Cost,
+      parseInt(Class_Cost),
       Class_Name,
       Class_Duration,
       Class_Date,
@@ -480,11 +481,11 @@ const createClass = async (req, res) => {
     ],
     (err, result) => {
       if (err) {
-        console.error(err);
+        console.log(err);
         res.status(500).send(err);
         return;
       } else {
-        res.status(200).send("New class created successfully");
+        res.status(200).json({ message: "New class created successfully" });
         return;
       }
     }

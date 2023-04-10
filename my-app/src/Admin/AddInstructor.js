@@ -14,8 +14,8 @@ function AddInstructor() {
     status_active: false,
   });
   const [classes, setClasses] = useState([]);
-
   const [classTypes, setClassTypes] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,7 +28,6 @@ function AddInstructor() {
         }
       );
       const data = await response.json();
-      console.log(data);
       setClassTypes(data);
       console.log(classTypes);
     };
@@ -58,6 +57,16 @@ function AddInstructor() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (
+      instructor.first_name === "" ||
+      instructor.last_name === "" ||
+      instructor.address === "" ||
+      instructor.gender === "" ||
+      instructor.languages === "" ||
+      classes.length === 0
+    ) {
+      return;
+    }
     const requestBody = {
       instructor,
       classes,
@@ -70,12 +79,18 @@ function AddInstructor() {
       body: JSON.stringify(requestBody),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      })
       .catch((error) => console.error(error));
   };
 
   return (
     <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "auto" }}>
+      <h3 style={{ marginBottom: "5px" }}>Add Instructor:</h3>
       <label style={{ display: "block", marginBottom: "10px" }}>
         First Name:
         <input
@@ -170,16 +185,26 @@ function AddInstructor() {
       <button
         type="submit"
         style={{
-          backgroundColor: "#4CAF50",
+          padding: "5px",
+          borderRadius: "5px",
+          border: "1px solid grey",
+          backgroundColor: "blue",
           color: "white",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
         }}
       >
         Submit
       </button>
+      {success && (
+        <h3
+          style={{
+            color: "green",
+            backgroundColor: "lightgreen",
+            padding: "10px",
+          }}
+        >
+          Successfully Added Instructor! Page will refresh shortly.
+        </h3>
+      )}
     </form>
   );
 }

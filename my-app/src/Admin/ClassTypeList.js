@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
-import UpdateGym from "./UpdateGym";
 
-function GymList() {
+function ClassTypeList() {
   const { AdminID } = useContext(AdminContext);
-  const [gyms, setGyms] = useState([]);
+  const [classTypes, setClassTypes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "http://localhost:8000/api/admin/getAllGyms",
+        "http://localhost:8000/api/admin/getAllCategories",
         {
           headers: {
             admin: `${AdminID}`,
@@ -18,15 +17,16 @@ function GymList() {
       );
       const data = await response.json();
       console.log(data);
-      setGyms(data);
+      setClassTypes(data);
     };
     fetchData();
   }, []);
 
-  const handleDeleteGym = async (gym) => {
+  const handleClassType = async (drop_classType) => {
+    console.log(drop_classType);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/admin/deleteGym/${gym.gymId}`,
+        `http://localhost:8000/api/admin/deleteCategory/${drop_classType.Class_Category}`,
         {
           method: "DELETE",
           headers: {
@@ -36,8 +36,11 @@ function GymList() {
       );
       const data = await response.json();
       console.log(data);
-      setGyms((prevGyms) =>
-        prevGyms.filter((safe_gym) => safe_gym.gymId !== gym.gymId)
+      setClassTypes((classType) =>
+        classType.filter(
+          (safe_Type) =>
+            safe_Type.Class_Category !== drop_classType.Class_Category
+        )
       );
     } catch (error) {
       console.error(error);
@@ -46,34 +49,37 @@ function GymList() {
 
   return (
     <div style={{ margin: "auto", maxWidth: "80%" }}>
-      <h1>List of Gyms</h1>
+      <h1>List of Class Types</h1>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr style={{ borderBottom: "1px solid #ddd" }}>
-            <th style={{ textAlign: "left", padding: "10px" }}>Gym Name</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Address</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Studios</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>
+              Class Category
+            </th>
+            <th style={{ textAlign: "left", padding: "10px" }}>
+              Intensity Level
+            </th>
+            <th style={{ textAlign: "left", padding: "10px" }}>
+              Equipment Required
+            </th>
             <th style={{ textAlign: "left", padding: "10px" }}>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {gyms.map((gym) => (
-            <tr key={gym.gymId} style={{ borderBottom: "1px solid #ddd" }}>
-              <td style={{ padding: "10px" }}>{gym.name}</td>
-              <td style={{ padding: "10px" }}>{gym.address}</td>
+          {classTypes.map((classType) => (
+            <tr
+              key={classType.Class_Category}
+              style={{ borderBottom: "1px solid #ddd" }}
+            >
+              <td style={{ padding: "10px" }}>{classType.Class_Category}</td>
+              <td style={{ padding: "10px" }}>{classType.Intensity_Level}</td>
               <td style={{ padding: "10px" }}>
-                {gym.studios.map((studio) => (
-                  <div key={studio.roomNo}>
-                    <p>{studio.name}</p>
-                    <p>Room No: {studio.roomNo}</p>
-                    <p>Size: {studio.size}</p>
-                  </div>
-                ))}
+                {classType.Equipment_Required}
               </td>
               <td style={{ padding: "10px" }}>
-                <UpdateGym gym={gym} />
+                {/* <UpdateGym gym={gym} /> */}
                 <button
-                  onClick={() => handleDeleteGym(gym)}
+                  onClick={() => handleClassType(classType)}
                   style={{
                     marginLeft: "8px",
                     padding: "10px",
@@ -84,7 +90,7 @@ function GymList() {
                     cursor: "pointer",
                   }}
                 >
-                  Delete Gym
+                  Delete Class Type
                 </button>
               </td>
             </tr>
@@ -95,4 +101,4 @@ function GymList() {
   );
 }
 
-export default GymList;
+export default ClassTypeList;
