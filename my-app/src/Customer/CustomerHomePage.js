@@ -18,29 +18,42 @@ function CustomerHomePage() {
               < ClassList />            
           </div>
         );
+        case "buy_membership":
+          return (
+            <div> 
+                < MembershipNo />            
+            </div>
+          );
       default:
         return null;
     }
   };
 
+ //const { MembershipID } = findMembershipNo(CustomerID);
+
+
   return (
     <div>
-        {CustomerID === null ? // TODO: needs to be updated to reflect membership ID
+        <div> 
+            Customer No.: {CustomerID} <br/>
+            Membership No.: '3' 
+        </div>  
+               
         <button
           style={{
-            backgroundColor: "blue",
+            backgroundColor: "yellow",
             border: "none",
             fontSize: "16px",
             margin: "10px",
             padding: "10px",
             cursor: "pointer",
           }}
-          //onClick={() => handleContentChange("gym")}
+          onClick={() => handleContentChange("buy_membership")}
         >
           BUY MEMBERSHIP
         </button>
-        :        
-        <div> Customer No.: {CustomerID}</div>} 
+        
+
         
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
@@ -66,6 +79,21 @@ function CustomerHomePage() {
             onClick={() => handleContentChange("fitness_class")}
           >
             View All Classes
+          </button>
+          
+{/* JULIE CODE */}
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("buy_membership")}
+          >
+            MeowMeow
           </button>
         </div>
         <div className="content">{renderContent()}</div>
