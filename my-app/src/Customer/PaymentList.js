@@ -4,7 +4,6 @@ import { CustomerContext } from "../Context/CustomerContext";
 function PaymentList() {
     const { CustomerID } = useContext(CustomerContext);
     const [payments, setPayments] = useState([]);
-
     useEffect(() => {
       const fetchData = async () => {
         const response = await fetch(
@@ -21,7 +20,6 @@ function PaymentList() {
       };
       fetchData();
     }, []);
-  
     return (
       <div style={{ margin: "auto", maxWidth: "80%" }}>
 
