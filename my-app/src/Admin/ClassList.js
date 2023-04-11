@@ -89,7 +89,7 @@ function ClassList() {
                 {classObj.Class_Duration + " minutes"}
               </td>
               <td style={{ padding: "10px" }}>{classObj.Class_Description}</td>
-              <td style={{ padding: "10px" }}>{classObj.Class_Date}</td>
+              <td style={{ padding: "10px" }}>{new Date(classObj.Class_Date).toDateString()}</td>
               <td style={{ padding: "10px" }}>{classObj.Class_Time}</td>
               <td style={{ padding: "10px" }}>{classObj.Equipment_Required}</td>
               <td style={{ padding: "10px" }}>{classObj.No_of_Max_Ppl}</td>

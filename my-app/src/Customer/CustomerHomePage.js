@@ -3,6 +3,8 @@ import ClassList from "./ClassList";
 import MembershipBuy from "./MembershipBuy";
 import React, { useState, useEffect, useContext } from "react";
 import PaymentList from "./PaymentList";
+import GymList from "./GymList";
+
 
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class");
@@ -26,6 +28,12 @@ function CustomerHomePage() {
             <PaymentList/>
           </div>
         )
+        case "gym_list":
+          return (
+            <div>
+              <GymList/>
+            </div>
+          )
       default:
         return null;
     }
@@ -102,6 +110,19 @@ function CustomerHomePage() {
             onClick={() => handleContentChange("payments_for_classes")}
           >
             View All Class Payments
+          </button>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("gym_list")}
+          >
+            View All Gyms 
           </button>
           <button
             style={{

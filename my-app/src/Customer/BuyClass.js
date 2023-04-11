@@ -17,6 +17,9 @@ function BuyClass(eachClass) {
     }
 
     const handleBuy = (close) => {
+        // if credit card no is empty, do not allow user to pay for class
+        if (creditCardNo === "") {return;}
+
         const requestBody = {
           classId: eachClass.eachClass.Class_ID,
           paymentAmount: eachClass.eachClass.Class_Cost,
@@ -31,10 +34,8 @@ function BuyClass(eachClass) {
         })
           .then((response) => response.json())
           .then((data) => { 
-                            //close();  
                             setSuccess(true); 
                             setTimeout(() => {window.location.reload();}, 3000);
-                          
                             console.log(data); })
           .catch((error) => console.error(error));
     };
@@ -112,7 +113,7 @@ function BuyClass(eachClass) {
                       padding: "10px",
                     }}
                   >
-                    Successfully Added Class! Page will refresh shortly.
+                    Class Added! Please see Class Payment for Confirmation.
                   </h3>
                 )}
               </form>

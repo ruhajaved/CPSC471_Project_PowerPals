@@ -40,6 +40,7 @@ function ClassList() {
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Name</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Gender</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Instructor Languages</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Gym Name</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Studio Name</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Intensity Level</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Equipment Requirement</th>
@@ -59,6 +60,7 @@ function ClassList() {
               <td style={{ padding: "10px" }}>{eachClass.First_Name + " " + eachClass.Last_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Gender}</td>
               <td style={{ padding: "10px" }}>{eachClass.Languages}</td>
+              <td style={{ padding: "10px" }}>{eachClass.Gym_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Studio_Name}</td>
               <td style={{ padding: "10px" }}>{eachClass.Intensity_Level}</td>
               <td style={{ padding: "10px" }}>{eachClass.Equipment_Required}</td>
