@@ -97,9 +97,9 @@ function MembershipBuy() {
                 onChange={handleTierChange} // Change the tier options shown to customer here
                 >
                 <option value=""></option>
-                <option value="Gold">Gold - 15% off </option>
-                <option value="Silver">Silver - 10% off </option>
-                <option value="Bronze">Bronze - 5% off </option>  
+                <option value="Gold">Gold - 20% off </option>
+                <option value="Silver">Silver - 15% off </option>
+                <option value="Bronze">Bronze - 10% off </option>  
                 </select>             
             </label>
             <button
