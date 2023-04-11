@@ -3,11 +3,9 @@ import ClassList from "./ClassList";
 import MembershipBuy from "./MembershipBuy";
 import React, { useState, useEffect, useContext } from "react";
 
-
 function CustomerHomePage() {
-  const [content, setContent] = useState("fitness_class"); // default to gym content
-  const { CustomerID } = useContext(CustomerContext);
-  const [member, setMember] = useState(null);
+  const [content, setContent] = useState("fitness_class");
+  const { CustomerID, MembershipID, MembershipTier, trackMembership } = useContext(CustomerContext);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -38,14 +36,15 @@ function CustomerHomePage() {
       );
       const data = await response.json();
       console.log(data);
-      setMember(data);
+      if (data === {}) return;                  // HOW DO I GET THIS TO WORK?
+      trackMembership(data.Membership_ID, data.Tier);
     };
     fetchData();
   }, [] );
 
 
   const conditionalRenderMembership = () => {
-    if (member?.Membership_ID == null) {
+    if (MembershipID == null) {
       return (
         <MembershipBuy></MembershipBuy>
       )
@@ -55,12 +54,10 @@ function CustomerHomePage() {
   return (
     <div>
       <div> 
-        Membership No.:  {member?.Membership_ID} <br/>
-        Tier Level:   {member?.Tier} <br/>
+        Membership No.:  {MembershipID} <br/>
+        Tier Level:   {MembershipTier} <br/>
         {conditionalRenderMembership()}
       </div>
-    
-        
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           style={{

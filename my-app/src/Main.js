@@ -27,7 +27,8 @@ function Main() {
         <Route path="*" element={<AdminHomePage />} />
       </React.Fragment>
     );
-  } else if (CustomerID !== null) {
+  } else 
+  if (CustomerID !== null) {
     routes = (
       <React.Fragment>
         <Route path="*" element={<CustomerHomePage />} />

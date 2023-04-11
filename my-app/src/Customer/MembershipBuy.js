@@ -20,34 +20,20 @@ function MembershipBuy() {
     setTierChoice(event.target.value);
   }
 
-  const [member, setMember] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:8000/api/user/getMembership",
-        {
-          headers: {
-            customerId: `${CustomerID}`,
-          },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      setMember(data);
-    };
-    fetchData();
-  }, [] );
+  const handleBuyMem = async (close) => {
+    // Figure out how much membership costs based off of tier.
+    var amount;
+    if (tier === "Gold") amount = 100;
+    else if (tier === "Silver") amount = 75;
+    else amount = 50;
 
-  const handleBuyMem = (close) => {
-       
     const requestBody = {
       creditCardNo: creditCardNo,
       promoCode: promoCode,
       tier: tier,
-      // for now, just used a constant k = 50
-      paymentAmount: 50,
+      paymentAmount: amount,
     };
-    fetch("http://localhost:8000/api/user/buyMembership", {
+    const response = await fetch("http://localhost:8000/api/user/buyMembership", {
       method: "POST",
       headers: { "Content-Type": "application/json", customerId: `${CustomerID}` },
       body: JSON.stringify(requestBody),

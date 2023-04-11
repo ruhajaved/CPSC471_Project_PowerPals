@@ -1,6 +1,12 @@
 const { response } = require("express");
 const pool = require("../db");
 
+TierDiscounts = {
+    "Gold" : 20,
+    "Silver": 10,
+    "Bronze": 5
+}
+
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
         
@@ -147,9 +153,10 @@ const buyMembership = async (req, res) => {
         );
 
         await connection.commit();
-        res.status(200).send({membershipId: `${membershipId}`});
+        const response = {membershipId: `${membershipId}`};
+        console.log(response);
+        res.status(200).json(response);
         return;
-
     }
     catch (err) {
         console.error(err);
@@ -175,8 +182,10 @@ const buyClass = async (req, res) => {
         paymentAmount,
         creditCardNo,
         promoCode,
+        tier
     } = req.body;
 
+    var adjustedPaymentAmount = paymentAmount;
     // If there is a promo code - double check that it is valid.
     if (promoCode)
     {
@@ -185,7 +194,14 @@ const buyClass = async (req, res) => {
             res.status(500).send({message: `Invalid or old promo code ${promoCode}.`});
             return;
         }
-        var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
+        adjustedPaymentAmount = adjustedPaymentAmount * (100-promoCodeDiscount)/100;
+    }
+
+    // If customer has membership, apply to total amount.
+    if (tier)
+    {
+        tierDiscount = TierDiscounts[tier];
+        adjustedPaymentAmount = adjustedPaymentAmount * (100-tierDiscount)/100;
     }
 
     const connection = await pool.promise().getConnection();
@@ -193,7 +209,6 @@ const buyClass = async (req, res) => {
         await connection.beginTransaction();
         
         // Create payment - account for the fact that promo code might be used or might not be.
-         // UTC?
         const dateTime = new Date();
         if (promoCode) {
             payment_results = await connection.execute(
@@ -204,7 +219,7 @@ const buyClass = async (req, res) => {
         else {
             payment_results = await connection.execute(
                 "INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No) VALUES (?, ?, ?)",
-                [dateTime, paymentAmount, creditCardNo]
+                [dateTime, adjustedPaymentAmount, creditCardNo]
             );
         }
         const transactionId = payment_results[0].insertId;
