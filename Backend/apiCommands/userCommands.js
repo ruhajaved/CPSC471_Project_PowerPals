@@ -334,4 +334,51 @@ const getClasses = async (req, res) => {
     )
 };
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses };
+const getAllGymsUsers = async (req, res) => {
+    if (!req.headers["customerid"]) {
+        res.status(404).json({ error: "Need to have CustomerId header." });
+        return;
+    }
+  
+    pool.query(
+      `SELECT COALESCE(studio.Gym_ID, gym.Gym_ID) AS Gym_ID, gym.Address, gym.Gym_Name, studio.Studio_Room_No, studio.Studio_Name, studio.Studio_Size 
+        FROM gym LEFT OUTER JOIN studio ON gym.Gym_ID = studio.Gym_ID`,
+      (error, results, fields) => {
+        if (error) {
+          console.error(error);
+          res.status(500).json({ error: "Internal server error" });
+          return;
+        }
+  
+        // Group the results by gym ID
+        const gyms = {};
+        results.forEach((row) => {
+          const gymId = row.Gym_ID;
+          gyms[gymId] = {
+            gymId: gymId,
+            address: row.Address,
+            name: row.Gym_Name,
+            studios: [],
+          };
+        });
+        results.forEach((row) => {
+          const gymId = row.Gym_ID;
+          if (row.Studio_Room_No) {
+            gyms[gymId].studios.push({
+              gymId: gymId,
+              roomNo: row.Studio_Room_No,
+              name: row.Studio_Name,
+              size: row.Studio_Size,
+            });
+          }
+        });
+        // Convert the object to an array and send as JSON
+        const response = Object.values(gyms);
+        res.json(response);
+        return;
+      }
+    );
+  };
+
+
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses, getAllGymsUsers };

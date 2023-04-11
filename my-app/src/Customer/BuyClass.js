@@ -17,6 +17,9 @@ function BuyClass(eachClass) {
     }
 
     const handleBuy = (close) => {
+        if (creditCardNo === "") {return;}
+
+
         const requestBody = {
           classId: eachClass.eachClass.Class_ID,
           paymentAmount: eachClass.eachClass.Class_Cost,
@@ -112,7 +115,7 @@ function BuyClass(eachClass) {
                       padding: "10px",
                     }}
                   >
-                    Successfully Added Class! Page will refresh shortly.
+                    Classes Added! Please see Class Payment for Confirmaton.
                   </h3>
                 )}
               </form>

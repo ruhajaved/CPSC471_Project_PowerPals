@@ -8,7 +8,8 @@ const {
   buyMembership,
   buyClass,
   getPaymentForClasses,
-  getClasses
+  getClasses,
+  getAllGymsUsers
 } = require("../apiCommands/userCommands");
 
 router.post("/loginUser", loginUser);
@@ -18,5 +19,6 @@ router.post("/buyMembership", buyMembership);
 router.post("/buyClass", buyClass);
 router.get("/getPaymentForClasses", getPaymentForClasses);
 router.get("/getClasses", getClasses);
+router.get("/getAllGymsUsers", getAllGymsUsers);
 
 module.exports = router;
