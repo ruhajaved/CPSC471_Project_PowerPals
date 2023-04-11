@@ -91,6 +91,18 @@ VALUES
     ("Silver", 2),
     ("Bronze", 3);
 
+INSERT INTO payment (Trans_DateTime, Amount, Credit_Card_No)
+VALUES
+    ('2019-10-20', 100, 1234555555),
+    ('2019-10-26', 75, 12345678910),
+    ('2019-10-01', 50, 12111111111);
+
+INSERT INTO payment_for_membership (Membership_ID, Transaction_ID, Customer_ID)
+VALUES
+    (1, 1, 1),
+    (2, 2, 2),
+    (3, 3, 3);
+
 INSERT INTO promo_code (Promo_Code, Start_Date, End_Date, Description, Discount_Amount)
 VALUES ('ABCD','1986-05-08','2024-07-27','equatur.', 10),
 ('EFGH','2011-05-06','2030-09-17','t ci ducimus.', 20),

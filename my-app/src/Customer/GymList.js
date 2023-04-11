@@ -8,7 +8,7 @@ function GymList() {
     useEffect(() => {
       const fetchData = async () => {
         const response = await fetch(
-          "http://localhost:8000/api/user/getAllGymsUsers",
+          "http://localhost:8000/api/user/getAllGymsUser",
           {
             headers: {
               customerId: `${CustomerID}`,

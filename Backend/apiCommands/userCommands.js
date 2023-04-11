@@ -334,7 +334,7 @@ const getClasses = async (req, res) => {
     )
 };
 
-const getAllGymsUsers = async (req, res) => {
+const getAllGymsUser = async (req, res) => {
     if (!req.headers["customerid"]) {
         res.status(404).json({ error: "Need to have CustomerId header." });
         return;
@@ -410,4 +410,4 @@ const getAllGymsUsers = async (req, res) => {
     )
 };
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses, getAllGymsUsers, getPaymentForMembership};
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses, getAllGymsUser, getPaymentForMembership};
