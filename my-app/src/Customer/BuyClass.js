@@ -5,7 +5,7 @@ import { CustomerContext } from "../Context/CustomerContext";
 function BuyClass(eachClass) {
     const [ creditCardNo, setCreditCardNo ] = useState("");
     const [ promoCode, setPromoCode ] = useState("");
-    const { CustomerID } = useContext(CustomerContext);
+    const { CustomerID, MembershipTier } = useContext(CustomerContext);
 
     const handleCreditChange = (event) => {
         setCreditCardNo(event.target.value);
@@ -16,11 +16,13 @@ function BuyClass(eachClass) {
     }
 
     const handleBuy = (close) => {
+      console.log(MembershipTier);
         const requestBody = {
           classId: eachClass.eachClass.Class_ID,
           paymentAmount: eachClass.eachClass.Class_Cost,
           creditCardNo: creditCardNo,
-          promoCode: promoCode
+          promoCode: promoCode,
+          tier: MembershipTier
         };
         fetch("http://localhost:8000/api/user/buyClass", {
           method: "POST",
