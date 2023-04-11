@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
 import UpdateGym from "./UpdateGym";
-import Popup from "reactjs-popup"; // import your Popup component here
 
 function GymList() {
   const { AdminID } = useContext(AdminContext);
   const [gyms, setGyms] = useState([]);
-  const [selectedGym, setSelectedGym] = useState(null);
-  const [openUpdateForm, setOpenUpdateForm] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,17 +23,6 @@ function GymList() {
     fetchData();
   }, []);
 
-  const handleUpdateGym = (gym) => {
-    console.log(gym);
-    setSelectedGym(gym);
-    setOpenUpdateForm(true);
-  };
-
-  const handleCloseUpdateForm = () => {
-    setSelectedGym(null);
-    setOpenUpdateForm(false);
-  };
-
   const handleDeleteGym = async (gym) => {
     try {
       const response = await fetch(
@@ -50,6 +36,9 @@ function GymList() {
       );
       const data = await response.json();
       console.log(data);
+      setGyms((prevGyms) =>
+        prevGyms.filter((safe_gym) => safe_gym.gymId !== gym.gymId)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -83,24 +72,11 @@ function GymList() {
               </td>
               <td style={{ padding: "10px" }}>
                 <UpdateGym gym={gym} />
-                {/* <button
-                  onClick={() => handleUpdateGym(gym)}
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Update Gym
-                </button> */}
                 <button
                   onClick={() => handleDeleteGym(gym)}
                   style={{
                     marginLeft: "8px",
-                    padding: "8px 16px",
+                    padding: "10px",
                     backgroundColor: "#f44336",
                     color: "white",
                     border: "none",

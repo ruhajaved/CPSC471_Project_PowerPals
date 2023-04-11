@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
+import UpdateInstructor from "./UpdateInstructor";
 
 function InstructorList() {
   const { AdminID } = useContext(AdminContext);
   const [instructors, setInstructors] = useState([]);
-  const [selectedGym, setSelectedInstructor] = useState(null);
-  const [openUpdateForm, setOpenUpdateForm] = useState(false);
+  const [classTypes, setClassTypes] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,42 +21,21 @@ function InstructorList() {
       console.log(data);
       setInstructors(data);
     };
-    fetchData();
-  }, []);
-
-  const handleUpdateInstructor = (gym) => {
-    setSelectedInstructor(gym);
-    setOpenUpdateForm(true);
-  };
-
-  const handleCloseUpdateForm = () => {
-    setSelectedInstructor(null);
-    setOpenUpdateForm(false);
-  };
-
-  const handleUpdate = (updatedGym) => {
-    // handle the update logic here
-    console.log(updatedGym);
-    setOpenUpdateForm(false);
-  };
-
-  const handleDeleteInstructor = async (instructor) => {
-    try {
+    const fetchData2 = async () => {
       const response = await fetch(
-        `http://localhost:8000/api/admin/deleteGym/${instructor.Id}`,
+        "http://localhost:8000/api/admin/getAllCategories",
         {
-          method: "DELETE",
           headers: {
             admin: `${AdminID}`,
           },
         }
       );
       const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      setClassTypes(data);
+    };
+    fetchData();
+    fetchData2();
+  }, []);
 
   return (
     <div style={{ margin: "auto", maxWidth: "80%" }}>
@@ -97,19 +76,12 @@ function InstructorList() {
               <td style={{ padding: "10px" }}>{instructor.classes_taught}</td>
               <td style={{ padding: "10px" }}>{instructor.Status_Active}</td>
               <td style={{ padding: "10px" }}>
-                <button
-                  onClick={() => handleUpdateInstructor(instructor)}
-                  style={{
-                    padding: "8px 16px",
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Edit
-                </button>
+                {classTypes && (
+                  <UpdateInstructor
+                    instructor={instructor}
+                    classTypes={classTypes}
+                  />
+                )}
               </td>
             </tr>
           ))}

@@ -142,8 +142,8 @@ ALTER TABLE payment_for_membership
 ;
 
 ALTER TABLE instructor_can_teach_class_type 
-	ADD	FOREIGN KEY (Instructor_ID) 	REFERENCES instructor(Instructor_ID),   
-	ADD	FOREIGN KEY (Class_Category) 	REFERENCES class_type(Class_Category) ON UPDATE CASCADE
+	ADD	FOREIGN KEY (Instructor_ID) 	REFERENCES instructor(Instructor_ID) ON UPDATE CASCADE,   
+	ADD	FOREIGN KEY (Class_Category) 	REFERENCES class_type(Class_Category) ON UPDATE CASCADE ON DELETE CASCADE
 ;
 
 ALTER TABLE payment 
@@ -158,7 +158,7 @@ ALTER TABLE fitness_class
 	ADD	FOREIGN KEY (Admin_ID) 			REFERENCES company_admin(Admin_ID),    
 	ADD	CONSTRAINT fk_studio FOREIGN KEY (Gym_ID, Studio_Room_No) REFERENCES studio(Gym_ID, Studio_Room_No) ON DELETE CASCADE,
 	ADD	FOREIGN KEY (Class_Category)	REFERENCES class_type(Class_Category),
-    ADD FOREIGN KEY (Instructor_ID)     REFERENCES instructor(Instructor_ID)
+    ADD FOREIGN KEY (Instructor_ID)     REFERENCES instructor(Instructor_ID) ON UPDATE CASCADE
 ;
 
 ALTER TABLE studio 

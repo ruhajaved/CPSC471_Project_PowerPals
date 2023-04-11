@@ -12,6 +12,7 @@ const {
   updateInstructor,
   getAllClasses,
   createClass,
+  deleteClass,
   updateClass,
   getAllCategories,
   createCategory,
@@ -42,6 +43,8 @@ router.patch("/updateInstructor/:id", updateInstructor);
 router.get("/getAllClasses", getAllClasses);
 
 router.post("/createClass", createClass);
+
+router.delete("/deleteClass/:id", deleteClass);
 
 router.patch("/updateClass/:id", updateClass);
 

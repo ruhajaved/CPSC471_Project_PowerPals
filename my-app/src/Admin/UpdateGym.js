@@ -39,71 +39,149 @@ function UpdateGym({ gym }) {
       body: JSON.stringify(updatedGym),
     })
       .then((response) => response.json())
-      .then((data) => close())
+      .then((data) => {
+        window.location.reload();
+        close();
+      })
       .catch((error) => console.error(error));
   };
 
   return (
     <Popup
-      trigger={<button>Update Gym</button>}
+      trigger={
+        <button
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            padding: "10px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Update Gym
+        </button>
+      }
       modal
       closeOnDocumentClick
       contentStyle={{
         background: "#1c1c1c",
         width: "80%",
         borderRadius: "15px",
-        padding: "1em",
+        padding: "1em 2em",
         border: "none",
+        maxHeight: "80vh",
+        overflowY: "auto",
       }}
       overlayStyle={{ background: "rgba(0, 0, 0, 0.7)" }}
     >
       {(close) => (
         <div className="popup">
-          <h2 style={{ color: "#ffffff" }}>Update Gym</h2>
-          <form>
-            <label style={{ color: "#ffffff" }}>
+          <h2 style={{ color: "#ffffff", marginBottom: "1em" }}>Update Gym</h2>
+          <form style={{ marginBottom: "1em" }}>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "block",
+                marginBottom: "0.5em",
+              }}
+            >
               Address:
               <input
                 type="text"
                 value={address}
                 onChange={handleAddressChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  width: "90%",
+                }}
               />
             </label>
-            <label style={{ color: "#ffffff" }}>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "block",
+                marginBottom: "0.5em",
+              }}
+            >
               Gym Name:
               <input
                 type="text"
                 value={gymName}
                 onChange={handleGymNameChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                  width: "90%",
+                }}
               />
             </label>
             {studios.map((studio, index) => (
-              <div key={index}>
-                <label style={{ color: "#ffffff" }}>
+              <div key={index} style={{ marginBottom: "1em" }}>
+                <label
+                  style={{
+                    color: "#ffffff",
+                    display: "block",
+                    marginBottom: "0.5em",
+                  }}
+                >
                   Studio Name:
                   <input
                     type="text"
                     name="name"
                     value={studio.name}
                     onChange={(event) => handleStudioChange(event, index)}
+                    style={{
+                      marginLeft: "10px",
+                      padding: "5px",
+                      borderRadius: "5px",
+                      width: "90%",
+                    }}
                   />
                 </label>
-                <label style={{ color: "#ffffff" }}>
+                <label
+                  style={{
+                    color: "#ffffff",
+                    display: "block",
+                    marginBottom: "0.5em",
+                  }}
+                >
                   Room No:
                   <input
                     type="text"
                     name="roomNo"
                     value={studio.roomNo}
                     onChange={(event) => handleStudioChange(event, index)}
+                    style={{
+                      marginLeft: "10px",
+                      padding: "5px",
+                      borderRadius: "5px",
+                      width: "90%",
+                    }}
                   />
                 </label>
-                <label style={{ color: "#ffffff" }}>
+                <label
+                  style={{
+                    color: "#ffffff",
+                    display: "block",
+                    marginBottom: "0.5em",
+                  }}
+                >
                   Size:
                   <input
                     type="text"
                     name="size"
                     value={studio.size}
                     onChange={(event) => handleStudioChange(event, index)}
+                    style={{
+                      marginLeft: "10px",
+                      padding: "5px",
+                      borderRadius: "5px",
+                      width: "90%",
+                    }}
                   />
                 </label>
               </div>
@@ -130,14 +208,15 @@ function UpdateGym({ gym }) {
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "5px",
-                padding: "0.5",
+                padding: "0.5em 1em",
+                marginTop: "1em",
               }}
               onClick={() => {
                 console.log("modal closed ");
                 close();
               }}
             >
-              close modal
+              Close Modal
             </button>
           </form>
         </div>
