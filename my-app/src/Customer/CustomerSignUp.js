@@ -108,7 +108,7 @@ function CustomerSignUp() {
       <label style={{ display: "block", marginBottom: "10px" }}>
         Password:
         <input
-          type="text"
+          type="password"
           name="password"
           checked={customer.password}
           onChange={handleInputChange}

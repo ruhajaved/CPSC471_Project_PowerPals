@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class");
-  const { CustomerID, MembershipID, MembershipTier, trackMembership } = useContext(CustomerContext);
+  const { CustomerID, MembershipID, MembershipTier, trackMembership, logout } = useContext(CustomerContext);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -82,6 +82,25 @@ function CustomerHomePage() {
             onClick={() => handleContentChange("fitness_class")}
           >
             View All Classes
+          </button>
+          <button
+            style={{
+              backgroundColor: "#ff3366",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              textDecoration: "none",
+              borderRadius: "5px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease",
+            }}
+            onClick={() => logout()}
+          >
+            Logout
           </button>
         </div>
         <div className="content">{renderContent()}</div>
