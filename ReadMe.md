@@ -28,8 +28,10 @@ Note: Make sure you have the correct dependencies installed, use "npm install" t
 
 ### Postman
 
-We have also attached two postman.json files which correspond to our two major routes for our RESTful express API. "Admin.json" contains api commands for all admin routes, while "Customer.json" contains all api commands for all user routes.
+We have also attached two postman.json files which correspond to our two major routes for our RESTful express API. "CPSC 471 Admin.postman*collection.json" contains api commands for all admin routes, while "471_Power_Pals*-\_User_Postman.postman_collection.json" contains all api commands for all user routes.
 
 Inside the Admin postman routes, we pass an API key from the CPSC 471 folder to all subfolders and files, this API key looks like "admin: 1". You can remove this api key to ensure only admins are able to call these routes.
 
 This is the same for the Customer postman routes.
+
+You can contact us at mustafa.muhammad1@ucalgary.ca for any questions.

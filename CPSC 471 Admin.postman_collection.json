@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "8ca6b85a-e6a4-462f-9a70-b80a32d571b8",
+		"name": "CPSC 471 Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13049611"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"johndoe@admin.com\",\r\n    \"password\" : \"password1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create gym",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"gym\": {\r\n        \"address\":\"fakeaddress\",\r\n        \"name\": \"fakegym\"\r\n    },\r\n    \"studios\":[\r\n        {\r\n            \"roomNo\":1,\r\n            \"name\": \"friendship room\",\r\n            \"size\": 10\r\n        },\r\n        {\r\n            \"roomNo\":10,\r\n            \"name\": \"friendship room2\",\r\n            \"size\": 100\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/createGym",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"createGym"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all gyms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/getAllGyms",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"getAllGyms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete gym",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/deleteGym/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"deleteGym",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update gym",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"gym\": {\r\n    \"address\": \"123 Main St\",\r\n    \"gym_name\": \"Test Brand\"\r\n  },\r\n  \"studios\": [\r\n    {\r\n      \"roomNo\": \"101\",\r\n      \"name\": \"Test Studio\",\r\n      \"size\": 100\r\n    },\r\n    {\r\n      \"roomNo\": \"1002\",\r\n      \"name\": \"How can I3443 be thiskksjdlfsjfd confused\",\r\n      \"size\": 200\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/updateGym/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"updateGym",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all instructors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/getAllInstructors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"getAllInstructors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create instructor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instructor\":{\r\n            \"first_name\": \"John\",\r\n            \"last_name\": \"Doe\",\r\n            \"address\": \"123 Main St, Anytown USA\",\r\n            \"email\": \"johndoe@email.com\",\r\n            \"gender\": \"male\",\r\n            \"languages\": \"English, Spanish\",\r\n            \"status_active\": true\r\n    },\r\n    \"classes\":[\"Yoga\", \"Zumba\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/createInstructor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"createInstructor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update instructor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"instructor\":{\r\n            \"first_name\": \"fakej1\",\r\n            \"last_name\": \"fake2\",\r\n            \"address\": \"123 fake st\",\r\n            \"email\": \"fake@email.com\",\r\n            \"gender\": \"male\",\r\n            \"languages\": \"English, French\",\r\n            \"status_active\": true\r\n    },\r\n    \"classes\":[\"Yoga\", \"Zumba\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/updateInstructor/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"updateInstructor",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/getAllClasses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"getAllClasses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create class",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"classInfo\":{\r\n    \"Class_Name\": \"Pilates for Beginners\",\r\n    \"Class_Date\": \"2023-05-01\",\r\n    \"Class_Time\": \"10:00:00\",\r\n    \"Class_Cost\": 15,\r\n    \"No_of_Max_Ppl\": 15,\r\n    \"Class_Description\": \"A beginner-friendly Pilates class for all ages.\",\r\n    \"Class_Duration\": 1.5,\r\n    \"Gym_ID\": 1,\r\n    \"Studio_Room_No\": \"C301\",\r\n    \"Class_Category\": \"Zumba\",\r\n    \"Instructor_ID\": 1,\r\n    \"Admin_ID\": 1\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/createClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"createClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update class",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Class_Name\": \"Yoga for Intermediate\",\r\n  \"Class_Date\": \"2023-05-01\",\r\n  \"Class_Time\": \"14:00:00\",\r\n  \"Class_Cost\": 15,\r\n  \"No_of_Max_Ppl\": 25,\r\n  \"Class_Description\": \"A challenging class for experienced yogis\",\r\n  \"Class_Duration\": 1.5,\r\n  \"Gym_ID\": 2,\r\n  \"Studio_Room_No\": \"A102\",\r\n  \"Instructor_ID\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/updateClass/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"updateClass",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete class",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/deleteClass/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"deleteClass",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/getAllCategories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"getAllCategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"Class_Category\": \"test test\",\r\n\t\"Intensity_Level\": 10,\r\n\t\"Equipment_Required\": \"None\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/admin/createCategory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"createCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/admin/deleteCategory/test test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"admin",
+								"deleteCategory",
+								"test test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "1",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

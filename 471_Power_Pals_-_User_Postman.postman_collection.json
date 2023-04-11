@@ -1,0 +1,664 @@
+{
+	"info": {
+		"_postman_id": "78458e5a-f7c3-433b-803b-8f1770e3e5c2",
+		"name": "471_Power_Pals - User Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26699356"
+	},
+	"item": [
+		{
+			"name": "User routes w/ token - member",
+			"item": [
+				{
+					"name": "getMembership - exists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getMembership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/ promo code, w/ membership - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"1\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"ABCD\",\n    \"tier\": \"Silver\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/out promo code, w/ membership - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"2\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"\",\n    \"tier\": \"Silver\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/ invalid promo code, valid membership",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"1\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"CD\",\n    \"tier\": \"Silver\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPaymentForMembership",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getPaymentForMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getPaymentForMembership"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "2",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "customerid",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User routes w/out token",
+			"item": [
+				{
+					"name": "loginUser - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"joanny97@example.net\",\n    \"password\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/loginUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"loginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser - fail, wrong email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"joanny97\",\n    \"password\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/loginUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"loginUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signUpUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer\" : {\n        \"firstName\": \"JJJJ\",\n        \"lastName\": \"MMMM\",\n        \"address\": \"2945 Douglas Ma96194\",\n        \"email\": \"test@yahoo.net\",\n        \"gender\" : \"Female\",\n        \"dateOfBirth\" : \"2020-10-22 05:49:00\",\n        \"password\" : \"testpassword\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/signUpUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"signUpUser"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User routes w/ token - not a member",
+			"item": [
+				{
+					"name": "getMembership - does not exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getMembership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyMembership w/ code - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tier\" : \"Gold\",\n    \"paymentAmount\": 50,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"ABCD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyMembership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyMembership w/out code - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tier\" : \"Gold\",\n    \"paymentAmount\" : 50,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyMembership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyMembership w/ invalid code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tier\" : \"Gold\",\n    \"paymentAmount\" : 50,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"AB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyMembership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyMembership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/ promo code, w/out membership - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"1\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"ABCD\",\n    \"tier\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/out promo code, w/out membership - success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"1\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"\",\n    \"tier\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyClass w/ invalid promo code, no membership",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"classId\" : \"1\",\n    \"paymentAmount\" : 40,\n    \"creditCardNo\": 123456789,\n    \"promoCode\": \"CD\",\n    \"tier\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/buyClass",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"buyClass"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "5",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "customerid",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "General endpoints w/ token",
+			"item": [
+				{
+					"name": "getPaymentsForClasses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getPaymentForClasses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getPaymentForClasses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGymsAllUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getAllGymsUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getAllGymsUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClasses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/user/getClasses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"getClasses"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "2",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "customerid",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
