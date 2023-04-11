@@ -19,21 +19,9 @@ function CustomerLogin() {
       const data = await response.json();
       console.log(data);
       login(data.Customer_ID);
-    //   console.log("HERE HERE HERE");
-    //   const response2 = await fetch("http://localhost:8000/api/user/getMembership", {
-    //     headers: {
-    //       customerId: `${CustomerID}`,
-    //     },
-    //   }
-    //   )
-    // const data2 = await response2.json();
-    // console.log(JSON.stringify(data2));
-    // console.log("HERE HERE HERE");
-    // console.log(data2);
     } catch (error) {
       console.error(error);
     }
-    //checkMembership();
   };
 
   return (

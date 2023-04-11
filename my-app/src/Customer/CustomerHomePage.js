@@ -6,7 +6,6 @@ import React, { useState, useEffect, useContext } from "react";
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class");
   const { CustomerID, MembershipID, MembershipTier, trackMembership } = useContext(CustomerContext);
-  const [member, setMember] = useState(null);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
@@ -39,7 +38,6 @@ function CustomerHomePage() {
       console.log(data);
       if (data === {}) return;                  // HOW DO I GET THIS TO WORK?
       trackMembership(data.Membership_ID, data.Tier);
-      setMember(data);
     };
     fetchData();
   }, [] );
@@ -47,7 +45,6 @@ function CustomerHomePage() {
 
   const conditionalRenderMembership = () => {
     if (MembershipID == null) {
-      console.log("here2");
       return (
         <MembershipBuy></MembershipBuy>
       )

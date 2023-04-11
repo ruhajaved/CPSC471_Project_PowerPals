@@ -31,7 +31,7 @@ function ClassList() {
           <tr style={{ borderBottom: "1px solid #ddd" }}>
             <th style={{ textAlign: "left", padding: "10px" }}>Class Name</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Cost</th>
-            <th style={{ textAlign: "left", padding: "10px" }}>Duration (mins)</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Class Duration</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Date</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Description</th>
             <th style={{ textAlign: "left", padding: "10px" }}>Max Seats</th>

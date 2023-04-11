@@ -16,7 +16,6 @@ function BuyClass(eachClass) {
     }
 
     const handleBuy = (close) => {
-      console.log(MembershipTier);
         const requestBody = {
           classId: eachClass.eachClass.Class_ID,
           paymentAmount: eachClass.eachClass.Class_Cost,
