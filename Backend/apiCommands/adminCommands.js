@@ -307,8 +307,6 @@ const updateInstructor = async (req, res) => {
     res.status(404).json({ error: "Need to be an admin" });
     return;
   }
-  console.log(req.params.id);
-  console.log(req.body);
   const instructorId = req.params.id;
   const instructor = req.body.instructor;
   const classes = req.body.classes;

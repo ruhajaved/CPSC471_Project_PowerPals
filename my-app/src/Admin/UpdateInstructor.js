@@ -48,8 +48,7 @@ function UpdateInstructor({ instructor, classTypes }) {
     setClasses(selectedClasses);
   };
 
-  const handleUpdate =
-   (close) => {
+  const handleUpdate = (close) => {
     const updatedInstructor = {
       instructor: {
         first_name: firstName,
