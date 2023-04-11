@@ -11,7 +11,9 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     // Save the adminID value to local storage each time it changes
-    localStorage.setItem("adminID", adminID);
+    if (adminID !== null) {
+      localStorage.setItem("adminID", adminID);
+    }
   }, [adminID]);
 
   const login = (id) => {

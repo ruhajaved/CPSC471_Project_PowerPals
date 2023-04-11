@@ -11,7 +11,9 @@ export const CustomerProvider = ({ children }) => {
 
   useEffect(() => {
     // Save the adminID value to local storage each time it changes
-    localStorage.setItem("customerID", customerID);
+    if (customerID !== null) {
+      localStorage.setItem("customerID", customerID);
+    }
   }, [customerID]);
 
   const login = (id) => {
@@ -30,6 +32,8 @@ export const CustomerProvider = ({ children }) => {
   };
 
   return (
-    <CustomerContext.Provider value={value}>{children}</CustomerContext.Provider>
+    <CustomerContext.Provider value={value}>
+      {children}
+    </CustomerContext.Provider>
   );
 };
