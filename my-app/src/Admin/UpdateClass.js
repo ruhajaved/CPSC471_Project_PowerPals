@@ -2,74 +2,65 @@ import React, { useState, useContext } from "react";
 import Popup from "reactjs-popup";
 import { AdminContext } from "../Context/AdminContext";
 
-function UpdateInstructor({ instructor, classTypes }) {
+function UpdateClass({ classInfo }) {
   const { AdminID } = useContext(AdminContext);
-  const [firstName, setFirstName] = useState(instructor.First_Name);
-  const [lastName, setLastName] = useState(instructor.Last_Name);
-  const [address, setAddress] = useState(instructor.Address);
-  const [email, setEmail] = useState(instructor.Email);
-  const [gender, setGender] = useState(instructor.Gender);
-  const [languages, setLanguages] = useState(instructor.Languages);
-  const [isActive, setIsActive] = useState(instructor.Status_Active);
-  const [classes, setClasses] = useState(instructor.classes_taught);
+  const [className, setClassName] = useState(classInfo.Class_Name);
+  const [classDate, setClassDate] = useState(classInfo.Class_Date);
+  const [classTime, setClassTime] = useState(classInfo.Class_Time);
+  const [classCost, setClassCost] = useState(classInfo.Class_Cost);
+  const [maxPpl, setMaxPpl] = useState(classInfo.No_of_Max_Ppl);
+  const [classDescription, setClassDescription] = useState(
+    classInfo.Class_Description
+  );
+  const [classDuration, setClassDuration] = useState(classInfo.Class_Duration);
 
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
+  const handleClassNameChange = (event) => {
+    setClassName(event.target.value);
   };
 
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
+  const handleClassDateChange = (event) => {
+    setClassDate(event.target.value);
   };
 
-  const handleAddressChange = (event) => {
-    setAddress(event.target.value);
+  const handleClassTimeChange = (event) => {
+    setClassTime(event.target.value);
   };
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
+  const handleClassDurationChange = (event) => {
+    setClassDuration(event.target.checked);
   };
 
-  const handleLanguagesChange = (event) => {
-    setLanguages(event.target.value);
+  const handleClassCostChange = (event) => {
+    setClassCost(event.target.value);
   };
 
-  const handleIsActiveChange = (event) => {
-    setIsActive(event.target.checked);
+  const handleMaxPplChange = (event) => {
+    setMaxPpl(event.target.value);
   };
 
-  const handleClassesChange = (event) => {
-    const { options } = event.target;
-    const selectedClasses = [];
-    for (let i = 0; i < options.length; i++) {
-      if (options[i].selected) {
-        selectedClasses.push(options[i].value);
-      }
-    }
-    setClasses(selectedClasses);
+  const handleClassDescriptionChange = (event) => {
+    setClassDescription(event.target.checked);
   };
 
   const handleUpdate = (close) => {
     const updatedInstructor = {
-      instructor: {
-        first_name: firstName,
-        last_name: lastName,
-        address: address,
-        email: email,
-        gender: gender,
-        languages: languages,
-        status_active: isActive,
-      },
-      classes: classes,
+      Class_Name: className,
+      Class_Date: classDate,
+      Class_Time: classTime,
+      Class_Cost: classCost,
+      No_of_Max_Ppl: maxPpl,
+      Class_Description: classDescription,
+      Class_Duration: classDuration,
+      Gym_ID: classInfo.gym_ID,
+      Studio_Room_No: classInfo.Studio_Room_No,
+      Instructor_ID: classInfo.Instructor_ID,
     };
 
-    fetch(
-      `http://localhost:8000/api/admin/updateInstructor/${instructor.Instructor_ID}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json", admin: `${AdminID}` },
-        body: JSON.stringify(updatedInstructor),
-      }
-    )
+    fetch(`http://localhost:8000/api/admin/updateClass/${classInfo.Class_ID}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", admin: `${AdminID}` },
+      body: JSON.stringify(updatedInstructor),
+    })
       .then((response) => response.json())
       .then((data) => {
         window.location.reload();
@@ -93,7 +84,7 @@ function UpdateInstructor({ instructor, classTypes }) {
             cursor: "pointer",
           }}
         >
-          Update Instructor
+          Update Class
         </button>
       }
       modal
@@ -117,7 +108,7 @@ function UpdateInstructor({ instructor, classTypes }) {
           }}
         >
           <h2 style={{ color: "#ffffff", margin: "0 0 10px 0" }}>
-            Update Instructor
+            Update Class
           </h2>
           <form
             style={{
@@ -135,11 +126,11 @@ function UpdateInstructor({ instructor, classTypes }) {
                 margin: "10px 0",
               }}
             >
-              First Name:
+              Class Name:
               <input
                 type="text"
-                value={firstName}
-                onChange={handleFirstNameChange}
+                value={className}
+                onChange={handleClassNameChange}
                 style={{
                   marginLeft: "10px",
                   padding: "5px",
@@ -156,11 +147,95 @@ function UpdateInstructor({ instructor, classTypes }) {
                 margin: "10px 0",
               }}
             >
-              Last Name:
+              Class Date:
+              <input
+                type="date"
+                value={classDate}
+                onChange={handleClassDateChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                }}
+              />
+            </label>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: "10px 0",
+              }}
+            >
+              Class Time:
+              <input
+                type="time"
+                value={classTime}
+                onChange={handleClassTimeChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                }}
+              />
+            </label>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: "10px 0",
+              }}
+            >
+              Class Cost:
+              <input
+                type="number"
+                value={classCost}
+                onChange={handleClassCostChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                }}
+              />
+            </label>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: "10px 0",
+              }}
+            >
+              Max People:
+              <input
+                type="number"
+                value={maxPpl}
+                onChange={handleMaxPplChange}
+                style={{
+                  marginLeft: "10px",
+                  padding: "5px",
+                  borderRadius: "5px",
+                }}
+              />
+            </label>
+            <label
+              style={{
+                color: "#ffffff",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                margin: "10px 0",
+              }}
+            >
+              Class Description:
               <input
                 type="text"
-                value={lastName}
-                onChange={handleLastNameChange}
+                value={classDescription}
+                onChange={handleClassDescriptionChange}
                 style={{
                   marginLeft: "10px",
                   padding: "5px",
@@ -177,104 +252,17 @@ function UpdateInstructor({ instructor, classTypes }) {
                 margin: "10px 0",
               }}
             >
-              Address:
+              Class Duration (Minutes):
               <input
                 type="text"
-                value={address}
-                onChange={handleAddressChange}
+                value={classDuration}
+                onChange={handleClassDurationChange}
                 style={{
                   marginLeft: "10px",
                   padding: "5px",
                   borderRadius: "5px",
                 }}
               />
-            </label>
-            <label
-              style={{
-                color: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: "10px 0",
-              }}
-            >
-              Gender:
-              <input
-                type="text"
-                value={gender}
-                onChange={handleGenderChange}
-                style={{
-                  marginLeft: "10px",
-                  padding: "5px",
-                  borderRadius: "5px",
-                }}
-              />
-            </label>
-            <label
-              style={{
-                color: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: "10px 0",
-              }}
-            >
-              Languages:
-              <input
-                type="text"
-                value={languages}
-                onChange={handleLanguagesChange}
-                style={{
-                  marginLeft: "10px",
-                  padding: "5px",
-                  borderRadius: "5px",
-                }}
-              />
-            </label>
-            <label
-              style={{
-                color: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: "10px 0",
-              }}
-            >
-              Status:
-              <input
-                type="checkbox"
-                checked={isActive}
-                onChange={handleIsActiveChange}
-              />
-            </label>
-            <label
-              style={{
-                color: "#ffffff",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                margin: "10px 0",
-              }}
-            >
-              Classes:
-              <select
-                multiple={true}
-                onChange={handleClassesChange}
-                style={{
-                  marginLeft: "10px",
-                  padding: "5px",
-                  borderRadius: "5px",
-                }}
-              >
-                {classTypes.map((classType) => (
-                  <option
-                    key={classType.Class_Category}
-                    value={classType.Class_Category}
-                  >
-                    {classType.Class_Category}
-                  </option>
-                ))}
-              </select>
             </label>
             <button
               style={{
@@ -311,4 +299,4 @@ function UpdateInstructor({ instructor, classTypes }) {
   );
 }
 
-export default UpdateInstructor;
+export default UpdateClass;

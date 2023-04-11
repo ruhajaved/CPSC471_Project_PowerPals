@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import GymList from "./GymList";
 import AddGym from "./AddGym";
 import InstructorList from "./InstructorList";
@@ -6,12 +6,19 @@ import AddInstructor from "./AddInstructor";
 import ClassList from "./ClassList";
 import AddClass from "./AddClass";
 import ClassTypeList from "./ClassTypeList";
+import AddClassType from "./AddClassType";
+import { AdminContext } from "../Context/AdminContext";
 
 function AdminHomePage() {
   const [content, setContent] = useState("gym"); // default to gym content
+  const { logout } = useContext(AdminContext);
 
   const handleContentChange = (newContent) => {
     setContent(newContent);
+  };
+
+  const logoutAdmin = () => {
+    logout();
   };
 
   const renderContent = () => {
@@ -40,6 +47,7 @@ function AdminHomePage() {
       case "classtype":
         return (
           <div>
+            <AddClassType />
             <ClassTypeList />
           </div>
         );
@@ -113,6 +121,25 @@ function AdminHomePage() {
             onClick={() => handleContentChange("classtype")}
           >
             Class Types
+          </button>
+          <button
+            style={{
+              backgroundColor: "#ff3366",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+              color: "#fff",
+              fontWeight: "bold",
+              textDecoration: "none",
+              borderRadius: "5px",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "background-color 0.3s ease",
+            }}
+            onClick={() => logoutAdmin()}
+          >
+            Logout
           </button>
         </div>
         <div className="content">{renderContent()}</div>

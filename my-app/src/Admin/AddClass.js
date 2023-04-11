@@ -233,7 +233,9 @@ function AddClass() {
           value={selectedGym ? selectedGym.name : ""}
           style={{ marginLeft: "10px", padding: "5px", borderRadius: "5px" }}
         >
-          <option value={""}>{"Select a Gym"}</option>
+          <option value={""} key="NOT_POSSIBLE">
+            {"Select a Gym"}
+          </option>
           {gyms.map((gym) => (
             <option key={gym.Gym_ID} value={gym.Gym_ID}>
               {gym.name}
@@ -249,7 +251,9 @@ function AddClass() {
             value={selectedStudioRoom ? selectedStudioRoom.name : ""}
             style={{ marginLeft: "10px", padding: "5px", borderRadius: "5px" }}
           >
-            <option value={""}>{"Select a Studio Room"}</option>
+            <option value={""} key="NOT_POSSIBLE">
+              {"Select a Studio Room"}
+            </option>
             {selectedGym.studios.map((studio) => (
               <option key={studio.roomNo} value={studio.roomNo}>
                 {studio.name}
@@ -265,7 +269,9 @@ function AddClass() {
           value={classInfo.Class_Category || ""}
           style={{ marginLeft: "10px", padding: "5px", borderRadius: "5px" }}
         >
-          <option value={""}>{"Select a Class Type"}</option>
+          <option value={""} key="NOT_POSSIBLE">
+            {"Select a Class Type"}
+          </option>
           {classTypes.map((classType) => (
             <option
               key={classType.Class_Category}
@@ -284,7 +290,9 @@ function AddClass() {
             value={classInfo.Instructor_ID || ""}
             style={{ marginLeft: "10px", padding: "5px", borderRadius: "5px" }}
           >
-            <option value={""}>{"Select an Instructor"}</option>
+            <option value={""} key="NOT_POSSIBLE">
+              {"Select an Instructor"}
+            </option>
             {instructors
               .filter((instructor) =>
                 instructor.classes_taught.includes(selectedClassType)

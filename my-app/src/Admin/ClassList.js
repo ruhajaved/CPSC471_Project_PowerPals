@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
+import UpdateClass from "./UpdateClass";
 
 function ClassList() {
   const { AdminID } = useContext(AdminContext);
@@ -16,6 +17,7 @@ function ClassList() {
         }
       );
       const data = await response.json();
+      console.log(response);
       console.log(data);
       setClasses(data);
     };
@@ -99,6 +101,8 @@ function ClassList() {
               </td>
               <td style={{ padding: "10px" }}>{classObj.admin_email}</td>
               <td style={{ padding: "10px" }}>
+                <UpdateClass classInfo={classObj} />
+
                 <button
                   onClick={() => handleDeleteClass(classObj)}
                   style={{

@@ -39,7 +39,10 @@ function UpdateGym({ gym }) {
       body: JSON.stringify(updatedGym),
     })
       .then((response) => response.json())
-      .then((data) => close())
+      .then((data) => {
+        window.location.reload();
+        close();
+      })
       .catch((error) => console.error(error));
   };
 

@@ -149,76 +149,6 @@ const deleteGym = async (req, res) => {
   );
 };
 
-// const updateGym = async (req, res) => {
-//   if (!req.headers["admin"]) {
-//     res.status(404).json({ error: "Need to be an admin" });
-//     return;
-//   }
-
-//   const gymId = req.params.id;
-//   const gymUpdates = req.body.gym;
-//   const studios = req.body.studios;
-
-//   const gymQueryParts = [];
-//   const gymQueryValues = [];
-
-//   // Build the SET clause for the gym query
-//   Object.keys(gymUpdates).forEach((key) => {
-//     gymQueryParts.push(`${key} = ?`);
-//     gymQueryValues.push(gymUpdates[key]);
-//   });
-
-//   // Add the gym ID as the last value in the gym query values array
-//   gymQueryValues.push(gymId);
-
-//   // Update the gym
-//   const gymQuery = `UPDATE gym SET ${gymQueryParts.join(
-//     ", "
-//   )} WHERE Gym_ID = ?`;
-//   pool.query(gymQuery, gymQueryValues, (error, results, fields) => {
-//     if (error) {
-//       res.status(500).json({ message: "Error updating gym", error: error });
-//       return;
-//     }
-
-//     // Delete all of the studios for the gym
-//     const deleteQuery = "DELETE FROM studio WHERE Gym_ID = ?";
-//     pool.query(deleteQuery, [gymId], (error, results, fields) => {
-//       if (error) {
-//         res
-//           .status(500)
-//           .json({ message: "Error deleting studios", error: error });
-//         return;
-//       }
-
-//       // Insert each studio into the database
-//       pool.query(
-//         `INSERT INTO studio (Gym_ID, Studio_Room_No, Studio_Name, Studio_Size) VALUES ?`,
-//         [
-//           studios.map((studio) => [
-//             gymId,
-//             studio.roomNo,
-//             studio.name,
-//             studio.size,
-//           ]),
-//         ],
-//         (error, results, fields) => {
-//           if (error) {
-//             res
-//               .status(500)
-//               .json({ message: "Error creating studios", error: error });
-//             return;
-//           }
-//         }
-//       );
-
-//       res.json({ message: "Gym updated successfully", gymId: gymId });
-//       return;
-//     });
-//   });
-//   return;
-// };
-
 const query = (sql, values) => {
   return new Promise((resolve, reject) => {
     pool.query(sql, values, (error, results, fields) => {
@@ -408,7 +338,9 @@ const updateInstructor = async (req, res) => {
     }
     console.log("MADE IT HERE");
     await connection.commit();
-    res.status(200).send(`Instructor ${instructorId} has been updated.`);
+    res
+      .status(200)
+      .json({ message: `Instructor ${instructorId} has been updated.` });
   } catch (err) {
     console.error(err);
     await connection.rollback();
@@ -444,6 +376,10 @@ const getAllClasses = (req, res) => {
 };
 
 const createClass = async (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
   const {
     Class_Cost,
     Class_Name,
@@ -492,6 +428,46 @@ const createClass = async (req, res) => {
   );
 };
 
+const deleteClass = async (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
+  try {
+    const classId = req.params.id;
+
+    const connection = await pool.promise().getConnection();
+
+    await connection.beginTransaction();
+
+    // Delete payment_for_classes for the given classId
+    await connection.query(
+      "DELETE FROM payment_for_classes WHERE Class_ID = ?",
+      [classId]
+    );
+
+    // Delete payments for the given classId
+    await connection.query(
+      "DELETE FROM payment WHERE Transaction_ID IN (SELECT Transaction_ID FROM payment_for_classes WHERE Class_ID = ?)",
+      [classId]
+    );
+
+    // Delete the fitness_class for the given classId
+    await connection.query("DELETE FROM fitness_class WHERE Class_ID = ?", [
+      classId,
+    ]);
+
+    await connection.commit();
+
+    connection.release();
+    res.status(200).json({
+      message: "Fitness class and associated payments deleted successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+};
 const updateClass = async (req, res) => {
   if (!req.headers["admin"]) {
     res.status(404).json({ error: "Need to be an admin" });
@@ -507,6 +483,8 @@ const updateClass = async (req, res) => {
     Class_Description,
     Class_Duration,
   } = req.body;
+
+  console.log(req.body);
 
   pool.query(
     "UPDATE fitness_class SET Class_Name = ?, Class_Date = ?, Class_Time = ?, Class_Cost = ?, No_of_Max_Ppl = ?, Class_Description = ?, Class_Duration = ? WHERE Class_ID = ?",
@@ -551,6 +529,10 @@ const getAllCategories = (req, res) => {
 };
 
 const createCategory = (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
   const { Class_Category, Intensity_Level, Equipment_Required } = req.body;
 
   const query =
@@ -563,12 +545,16 @@ const createCategory = (req, res) => {
       res.status(500).send(err);
     } else {
       console.log(`New category added: ${Class_Category}`);
-      res.status(200).send("New category added");
+      res.status(200).json({ message: "New category added" });
     }
   });
 };
 
 const deleteCategory = (req, res) => {
+  if (!req.headers["admin"]) {
+    res.status(404).json({ error: "Need to be an admin" });
+    return;
+  }
   const categoryName = req.params.categoryName;
   const sql = `DELETE FROM class_type WHERE Class_Category = ?`;
   pool.query(sql, [categoryName], (err, result) => {
@@ -577,7 +563,9 @@ const deleteCategory = (req, res) => {
       res.status(500).send(err);
       return;
     } else {
-      res.send(`Class category "${categoryName}" has been deleted.`);
+      res.status(200).json({
+        message: `Class category "${categoryName}" has been deleted.`,
+      });
       return;
     }
   });
@@ -594,6 +582,7 @@ module.exports = {
   updateInstructor,
   getAllClasses,
   createClass,
+  deleteClass,
   updateClass,
   getAllCategories,
   createCategory,

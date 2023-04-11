@@ -4,6 +4,7 @@ import { AdminContext } from "../Context/AdminContext";
 function ClassTypeList() {
   const { AdminID } = useContext(AdminContext);
   const [classTypes, setClassTypes] = useState([]);
+  const [inUse, setInUse] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,12 +37,20 @@ function ClassTypeList() {
       );
       const data = await response.json();
       console.log(data);
-      setClassTypes((classType) =>
-        classType.filter(
-          (safe_Type) =>
-            safe_Type.Class_Category !== drop_classType.Class_Category
-        )
-      );
+      console.log(response.status);
+      if (response.status === 200) {
+        setClassTypes((classType) =>
+          classType.filter(
+            (safe_Type) =>
+              safe_Type.Class_Category !== drop_classType.Class_Category
+          )
+        );
+        setInUse("");
+      } else {
+        setInUse(
+          "Cannot delete this class type as it is currently in use for at least one class."
+        );
+      }
     } catch (error) {
       console.error(error);
     }
@@ -50,6 +59,21 @@ function ClassTypeList() {
   return (
     <div style={{ margin: "auto", maxWidth: "80%" }}>
       <h1>List of Class Types</h1>
+      {inUse && (
+        <h3
+          style={{
+            color: "red",
+            fontSize: "18px",
+            fontWeight: "bold",
+            padding: "10px",
+            backgroundColor: "lightgray",
+            borderRadius: "5px",
+            textAlign: "center",
+          }}
+        >
+          {inUse}
+        </h3>
+      )}
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr style={{ borderBottom: "1px solid #ddd" }}>
