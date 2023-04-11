@@ -61,7 +61,6 @@ function UpdateInstructor({ instructor, classTypes }) {
       },
       classes: classes,
     };
-
     fetch(
       `http://localhost:8000/api/admin/updateInstructor/${instructor.Instructor_ID}`,
       {
@@ -72,6 +71,7 @@ function UpdateInstructor({ instructor, classTypes }) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         window.location.reload();
         close();
       })

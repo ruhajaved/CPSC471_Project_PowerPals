@@ -314,7 +314,7 @@ const updateInstructor = async (req, res) => {
   try {
     await connection.beginTransaction();
     const [results] = await connection.execute(
-      "UPDATE instructor SET first_name = ?, last_name = ?, address = ?, email = ?, gender = ?, languages = ? WHERE instructor_id = ?",
+      "UPDATE instructor SET first_name = ?, last_name = ?, address = ?, email = ?, gender = ?, languages = ?, status_active = ? WHERE instructor_id = ?",
       [
         instructor.first_name,
         instructor.last_name,
@@ -322,10 +322,10 @@ const updateInstructor = async (req, res) => {
         instructor.email,
         instructor.gender,
         instructor.languages,
-        instructorId,
+        instructor.status_active,
+        instructorId
       ]
     );
-
     // Update instructor_can_teach_class_type table
     const deleteQuery =
       "DELETE FROM instructor_can_teach_class_type WHERE instructor_id = ?";
@@ -336,7 +336,6 @@ const updateInstructor = async (req, res) => {
     for (const category of classes) {
       await connection.execute(insertQuery, [instructorId, category]);
     }
-    console.log("MADE IT HERE");
     await connection.commit();
     res
       .status(200)
@@ -344,7 +343,7 @@ const updateInstructor = async (req, res) => {
   } catch (err) {
     console.error(err);
     await connection.rollback();
-    res.status(500).send(err);
+    res.status(500).json(err);
   } finally {
     await connection.release();
   }
