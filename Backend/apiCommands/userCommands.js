@@ -265,7 +265,7 @@ const getPaymentForClasses = async (req, res) => {
                 res.status(500).json({ message: "Error getting payment for classes", error: error });
                 return;
                 }
-            res.status(200).send(results);
+            res.status(200).json(results);
             return;
         }
     )

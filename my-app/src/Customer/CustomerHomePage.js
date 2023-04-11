@@ -2,6 +2,7 @@ import { CustomerContext } from "../Context/CustomerContext";
 import ClassList from "./ClassList";
 import MembershipBuy from "./MembershipBuy";
 import React, { useState, useEffect, useContext } from "react";
+import PaymentList from "./PaymentList";
 
 function CustomerHomePage() {
   const [content, setContent] = useState("fitness_class");
@@ -19,6 +20,12 @@ function CustomerHomePage() {
               < ClassList />            
           </div>
         );
+      case "payments_for_classes":
+        return (
+          <div>
+            <PaymentList/>
+          </div>
+        )
       default:
         return null;
     }
@@ -82,6 +89,19 @@ function CustomerHomePage() {
             onClick={() => handleContentChange("fitness_class")}
           >
             View All Classes
+          </button>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              fontSize: "16px",
+              margin: "10px",
+              padding: "10px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleContentChange("payments_for_classes")}
+          >
+            View All Class Payments
           </button>
           <button
             style={{
