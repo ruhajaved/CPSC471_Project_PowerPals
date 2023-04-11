@@ -3,7 +3,7 @@ import { CustomerContext } from "../Context/CustomerContext";
 
 function GymList() {
     const { CustomerID } = useContext(CustomerContext);
-    const [gyms, getGyms] = useState([]);
+    const [gyms, setGyms] = useState([]);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -17,7 +17,7 @@ function GymList() {
         );
         const data = await response.json();
         console.log(data);
-        getGyms(data);
+        setGyms(data);
       };
       fetchData();
     }, []);
