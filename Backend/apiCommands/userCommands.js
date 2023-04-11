@@ -3,8 +3,8 @@ const pool = require("../db");
 
 TierDiscounts = {
     "Gold" : 20,
-    "Silver": 10,
-    "Bronze": 5
+    "Silver": 15,
+    "Bronze": 10
 }
 
 const loginUser = async (req, res) => {
@@ -16,7 +16,7 @@ const loginUser = async (req, res) => {
         (error, results) => {
             if (error) {
                 console.log(error);
-                res.status(500).send("Error logging in user.");
+                res.status(500).json({ message: "Error logging in user." });
                 return;
             }
 
@@ -27,7 +27,7 @@ const loginUser = async (req, res) => {
                 res.status(200).send(user);
                 return;
             } else {
-                res.status(401).send("Invalid username or password");
+                res.status(401).json( { message: "Invalid username or password" });
                 return;
             }
         }
@@ -83,7 +83,7 @@ const getMembership = async (req, res) => {
                 return;
             }
             else {
-                res.status(200).send({});
+                res.status(200).json({});
                 return;
             }
         }
@@ -112,7 +112,7 @@ const buyMembership = async (req, res) => {
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
         if(!promoCodeDiscount){
-            res.status(500).send({message: `Invalid or old promo code ${promoCode}.`});
+            res.status(500).json({ message: `Invalid or old promo code ${promoCode}.` });
             return;
         }
         var adjustedPaymentAmount = paymentAmount * (100-promoCodeDiscount)/100;
@@ -191,7 +191,7 @@ const buyClass = async (req, res) => {
     {
         const promoCodeDiscount = await checkPromoCode(promoCode);
         if(!promoCodeDiscount){
-            res.status(500).send({message: `Invalid or old promo code ${promoCode}.`});
+            res.status(500).json({ error: `Invalid or old promo code ${promoCode}.` });
             return;
         }
         adjustedPaymentAmount = adjustedPaymentAmount * (100-promoCodeDiscount)/100;
@@ -236,14 +236,14 @@ const buyClass = async (req, res) => {
                             transactionId: transactionId,
                             customerId: customerId};
         console.log(response);
-        res.status(200).send(response);
+        res.status(200).json(response);
         return;
 
     }
     catch (err) {
         console.error(err);
         await connection.rollback();
-        res.status(500).send(err);
+        res.status(500).json(err);
     } finally {
         await connection.release();
     }
