@@ -62,11 +62,14 @@ INSERT INTO fitness_class (
 ) 
 VALUES 
     (10, 'Yoga for Beginners', 60, '2023-04-05', 'Learn basic yoga poses and breathing techniques.', 20, '14:00:00', 1, 1, 'A101', 'Yoga', 1),
-    (15, 'Spin & Sweat', 45, '2023-04-06', 'A high-intensity cycling workout to burn calories and boost cardio.', 15, '11:00:00', 1, 1, 'B201', 'Spin', 2),
-    (20, 'Boxing Bootcamp', 90, '2023-04-07', 'A total-body workout that combines boxing, strength training, and cardio.', 25, '17:00:00', 2, 3, 'A103', 'Boxing', 3),
-    (12, 'Pilates Sculpt', 75, '2023-04-08', 'A low-impact, full-body workout that focuses on core strength and flexibility.', 10, '09:00:00', 3, 2, 'A102', 'Pilates', 4),
-    (8, 'Zumba Party', 60, '2023-04-09', 'A fun and energetic dance workout that combines Latin and international music.', 30, '18:00:00', 2, 4, 'A104', 'Zumba', 2),
-    (10, 'Yoga Flow', 60, '2023-04-10', 'A dynamic, flowing yoga class that links breath with movement.', 20, '10:00:00', 1, 1, 'A101', 'Yoga', 1);
+    (20, 'Yoga for Advanced', 60, '2023-01-01', 'Learn basic yoga poses and breathing techniques.', 20, '14:00:00', 1, 1, 'A101', 'Yoga', 1),
+    (15, 'Spin & Sweat', 45, '2023-04-19', 'A high-intensity cycling workout to burn calories and boost cardio.', 15, '11:00:00', 1, 1, 'B201', 'Spin', 2),
+    (20, 'Boxing Bootcamp', 90, '2023-04-14', 'A total-body workout that combines boxing, strength training, and cardio.', 25, '17:00:00', 2, 3, 'A103', 'Boxing', 3),
+    (12, 'Pilates Sculpt', 75, '2023-04-13', 'A low-impact, full-body workout that focuses on core strength and flexibility.', 10, '09:00:00', 3, 2, 'A102', 'Pilates', 4),
+    (8, 'Zumba Party', 60, '2023-04-20', 'A fun and energetic dance workout that combines Latin and international music.', 30, '18:00:00', 2, 4, 'A104', 'Zumba', 2),
+    (40, 'Spin Cats', 60, '2023-04-13', 'A dynamic, spin class with cats as your partners.', 20, '10:00:00', 1, 1, 'A101', 'Spin', 4),
+    (60, 'Zum-cat Party', 60, '2023-08-02', 'A fun and energetic dance workout that involves dancing cats', 30, '18:00:00', 2, 4, 'A104', 'Zumba', 2),
+    (70, 'Yoga Cats', 60, '2023-07-03', 'A calming class that involves petting and cuddling cats', 20, '10:00:00', 2, 1, 'A101', 'Yoga', 1);
 
 /* TODO: update password field to represent actual format */
 INSERT INTO customer (First_Name, Last_Name, Address, Email, Gender, Date_of_Birth, Password)
