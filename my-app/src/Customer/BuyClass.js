@@ -6,6 +6,7 @@ function BuyClass(eachClass) {
     const [ creditCardNo, setCreditCardNo ] = useState("");
     const [ promoCode, setPromoCode ] = useState("");
     const { CustomerID, MembershipTier } = useContext(CustomerContext);
+    const [success, setSuccess] = useState(false);
 
     const handleCreditChange = (event) => {
         setCreditCardNo(event.target.value);
@@ -29,7 +30,12 @@ function BuyClass(eachClass) {
           body: JSON.stringify(requestBody),
         })
           .then((response) => response.json())
-          .then((data) => { close(); console.log(data); })
+          .then((data) => { 
+                            //close();  
+                            setSuccess(true); 
+                            setTimeout(() => {window.location.reload();}, 3000);
+                          
+                            console.log(data); })
           .catch((error) => console.error(error));
     };
 
@@ -98,6 +104,17 @@ function BuyClass(eachClass) {
                 >
                   close
                 </button>
+                {success && (
+                  <h3
+                    style={{
+                      color: "green",
+                      backgroundColor: "lightgreen",
+                      padding: "10px",
+                    }}
+                  >
+                    Successfully Added Class! Page will refresh shortly.
+                  </h3>
+                )}
               </form>
             </div>
           )}
