@@ -48,7 +48,8 @@ function UpdateInstructor({ instructor, classTypes }) {
     setClasses(selectedClasses);
   };
 
-  const handleUpdate = (close) => {
+  const handleUpdate =
+   (close) => {
     const updatedInstructor = {
       instructor: {
         first_name: firstName,
@@ -61,7 +62,6 @@ function UpdateInstructor({ instructor, classTypes }) {
       },
       classes: classes,
     };
-
     fetch(
       `http://localhost:8000/api/admin/updateInstructor/${instructor.Instructor_ID}`,
       {
@@ -72,6 +72,7 @@ function UpdateInstructor({ instructor, classTypes }) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         window.location.reload();
         close();
       })
