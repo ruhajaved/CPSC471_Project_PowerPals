@@ -23,6 +23,16 @@ function CustomerSignUp() {
 
   const handleSignUp = (event) => {
     event.preventDefault();
+    if (
+      customer.firstName === "" ||
+      customer.lastName === "" ||
+      customer.address === "" ||
+      customer.email === "" ||
+      customer.dateOfBirth === "" ||
+      customer.password === "" 
+    ) {
+      return;
+    }
     const requestBody = {
       customer
     };
