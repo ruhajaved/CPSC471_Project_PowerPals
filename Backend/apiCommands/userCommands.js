@@ -380,5 +380,34 @@ const getAllGymsUsers = async (req, res) => {
     );
   };
 
+  const getPaymentForMembership = async (req, res) => {
+    if (!req.headers["customerid"]) {
+        res.status(404).json({ error: "Need to have CustomerId header." });
+        return;
+      }
+    const customerId = req.headers["customerid"];
 
-module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses, getAllGymsUsers };
+    pool.query(
+        `SELECT * 
+        FROM 
+            payment_for_membership as PFM, 
+            payment as P, 
+            membership as M 
+        WHERE 
+            PFM.Customer_ID = ? 
+            AND PFM.Transaction_ID = P.Transaction_ID 
+            AND PFM.Membership_ID = M.Membership_ID;`,
+        [customerId],
+        (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                res.status(500).json({ message: "Error getting payment for memberships", error: error });
+                return;
+                }
+            res.status(200).json(results);
+            return;
+        }
+    )
+};
+
+module.exports = { loginUser, signUpUser, getMembership, buyMembership, buyClass, getPaymentForClasses, getClasses, getAllGymsUsers, getPaymentForMembership};
